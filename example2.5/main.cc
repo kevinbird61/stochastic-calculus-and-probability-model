@@ -4,6 +4,8 @@
 #include <time.h>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
+#include <algorithm>
 // user-defined
 #include <ansi_color.h>
 #define DEFAULT_ROUNDS 100
@@ -13,15 +15,20 @@
 void helper(FILE *fp,char *prog);
 int checker();
 
+bool comp(int a,int b){
+    return a<b;
+}
+
 int main(int argc,char *argv[]){
-    // specify the n rounds, in range: 1~m
-    int c,n=DEFAULT_ROUNDS,m=DEFAULT_RANGES;
+    // specify the n rounds, in range: 1~m; with X = m (default value)
+    int c,n=DEFAULT_ROUNDS,m=DEFAULT_RANGES,x=DEFAULT_RANGES;
+    std::vector<int> steps_record;
     // parsing arguments
     while((c=getopt(argc,argv,"x:n:m:h"))!=-1){
         switch(c){
             case 'x':
                 if(optarg)
-                    n=std::atoi(optarg);
+                    x=std::atoi(optarg);
                 break;
             case 'n':
                 if(optarg) 
@@ -63,6 +70,7 @@ int main(int argc,char *argv[]){
             printf("%d: %d(%.3f)\n",i,count_arr[i],(float)count_arr[i]/total);
         }
         printf("Total steps: %d\n",total);
+        steps_record.push_back(total);
         avg_total+=total;
         count=0;
         total=0;
@@ -70,6 +78,16 @@ int main(int argc,char *argv[]){
     }
     printf("================================\n");
     printf("Average X: %f\n",(float)avg_total/avg);
+    std::sort(steps_record.begin(),steps_record.end(),comp);
+    int x_count=0;
+    for (std::vector<int>::iterator it=steps_record.begin(); it!=steps_record.end(); ++it){
+        //printf("%d ",*it);
+        if(*it == x){
+            x_count++;
+        }
+    }
+
+    printf("P{X=%d}= %f\n",x, (float)x_count/steps_record.size());
 
     return 0;
 }
