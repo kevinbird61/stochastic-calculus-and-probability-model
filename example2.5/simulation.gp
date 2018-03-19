@@ -1,12 +1,13 @@
 set title "Example 2.5 simulation"
-set xlabel "Testcase"
-set ylabel "Percentage"
+set xlabel "Testcase(steps)"
+set ylabel "Ratio(x/100)"
 set terminal png font " Times_New_Roman,12 "
 set output "simulation.png"
 
 # Get variable
 MAX="`head -1 simulation.output | awk '{print $4}'`"
 set xtic 1,1,MAX
+set xtics rotate by 45 right
 set key right
 
 # Plot
