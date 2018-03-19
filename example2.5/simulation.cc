@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <map>
 #include <algorithm>
 // user-defined
 #include <ansi_color.h>
@@ -21,8 +22,9 @@ bool comp(int a,int b){
 
 int main(int argc,char *argv[]){
     // specify the n rounds, in range: 1~m; with X = m (default value)
-    int c,n=DEFAULT_ROUNDS,m=DEFAULT_RANGES,x=DEFAULT_RANGES;
+    int c,n=DEFAULT_ROUNDS,testcase=n,m=DEFAULT_RANGES,x=DEFAULT_RANGES;
     std::vector<int> steps_record;
+    std::map<int, int> cumulate;
     // parsing arguments
     while((c=getopt(argc,argv,"x:n:m:h"))!=-1){
         switch(c){
@@ -85,20 +87,47 @@ int main(int argc,char *argv[]){
         if(*it == x){
             x_count++;
         }
+        cumulate[*it]++;
     }
 
     printf("P{X=%d}= %f\n",x, (float)x_count/steps_record.size());
+
+    // Write file
+    int last_index;
+    FILE *fp_plot;
+    fp_plot = fopen("simulation.output","w+");
+    if(!cumulate.empty())
+        last_index=(--cumulate.end())->first;
+    //fprintf(fp_plot,"# testcase map.size last_index\n");
+    fprintf(fp_plot,"# %d %d %d\n",testcase,(int)cumulate.size(),last_index);
+    /*for(auto it = cumulate.cbegin(); it != cumulate.cend(); ++it)
+    {
+        printf("[%d]: %d (%f)\n",it->first, it->second, (float)it->second/steps_record.size());
+        fprintf(fp_plot,"%d %f\n",it->first, (float)it->second/steps_record.size());
+        //std::cout << it->first << " " << it->second.first << " " << it->second.second << "\n";
+    }*/
+
+    for(int i=1;i<=last_index;i++){
+        if(cumulate.find(i)!=cumulate.end()){
+            printf("[%d]: %d (%f)\n",i,cumulate.at(i),(float)cumulate.at(i)/steps_record.size());
+            fprintf(fp_plot,"%d %f\n",i, (float)cumulate.at(i)/steps_record.size());
+        }
+        else{
+            printf("[%d]: %d (%f)\n",i,0,0.0);
+            fprintf(fp_plot,"%d %f\n",i, 0.0);
+        }
+    }
 
     return 0;
 }
 
 void helper(FILE *fp,char *prog){
     fprintf(fp,
-        ANSI_COLOR_RED"Usage: %s [-x threshold] [-n rounds] [-m range] [-h]"ANSI_COLOR_RESET"\n\n%s\n%s\n%s\n%s\n",
+        ANSI_COLOR_RED "Usage: %s [-x threshold] [-n rounds] [-m range] [-h]" ANSI_COLOR_RESET "\n\n%s\n%s\n%s\n%s\n",
         prog,
-        ANSI_COLOR_GREEN"  -x threshold"ANSI_COLOR_RESET":\tspecify the 'threshold' of the execution times of 1~m occurs at least one time.",
-        ANSI_COLOR_GREEN"  -n rounds"ANSI_COLOR_RESET":\tspecify how many times you want to run the simulation routine.",
-        ANSI_COLOR_GREEN"  -m range"ANSI_COLOR_RESET":\tspecify the range of each execution.",
-        ANSI_COLOR_GREEN"  -h "ANSI_COLOR_RESET":\tprint out the helper information."
+        ANSI_COLOR_GREEN "  -x threshold" ANSI_COLOR_RESET ":\tspecify the 'threshold' of the execution times of 1~m occurs at least one time.",
+        ANSI_COLOR_GREEN "  -n rounds" ANSI_COLOR_RESET ":\tspecify how many times you want to run the simulation routine.",
+        ANSI_COLOR_GREEN "  -m range" ANSI_COLOR_RESET ":\tspecify the range of each execution.",
+        ANSI_COLOR_GREEN "  -h " ANSI_COLOR_RESET ":\tprint out the helper information."
         );
 }
