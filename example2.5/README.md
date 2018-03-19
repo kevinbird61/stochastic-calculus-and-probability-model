@@ -3,8 +3,8 @@
 ## How to use?
 
 * Compile and run the default testcase: 
-    * range: 1~5
-    * testcase: 100
+    * range: `1~5`
+    * testcase: **`100`**
 ```bash
 make
 ```
@@ -12,5 +12,8 @@ make
 ## Result 
 
 * As you can see the figure down below, the `simulation(red line)` and the `mathematic(green line)` have the similar curve.
+    ![](simulation.png)
 
-![](simulation.png)
+* And then we increase the testcase to **`10^6`**:
+    ![](simulation_large.png)
+    * You can see it's more fit with the curve from mathematic model!
