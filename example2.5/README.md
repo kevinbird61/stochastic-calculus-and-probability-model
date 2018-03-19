@@ -17,3 +17,7 @@ make
 * And then we increase the testcase to **`10^6`**:
     ![](simulation_large.png)
     * You can see it's more fit with the curve from mathematic model!
+
+## Author
+
+* Kevin Cyu, kevinbird61@gmail.com
