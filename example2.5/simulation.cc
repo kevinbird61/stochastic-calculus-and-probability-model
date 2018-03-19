@@ -9,19 +9,31 @@
 #include <algorithm>
 // user-defined
 #include <ansi_color.h>
+/* 
+    specify default values of rounds (N) and range (M)
+*/
 #define DEFAULT_ROUNDS 100
 #define DEFAULT_RANGES 10
 
 // user-defined function
+/*
+    helper: print out the usage of this simulation program
+    comp: comparison function which used in std::sort
+*/
 void helper(FILE *fp,char *prog);
-int checker();
+bool comp(int a,int b){ return a<b; }
 
-bool comp(int a,int b){
-    return a<b;
-}
-
+// Main program
 int main(int argc,char *argv[]){
-    // specify the n rounds, in range: 1~m; with X = m (default value)
+    /* specify: 
+        n: rounds
+        testcase: equal to n
+        m: range between 1~m
+        x: m (default value)
+        ======
+        steps_record: record the totally used steps in each iteration
+        cumulate: record the counter from steps_record
+    */
     int c,n=DEFAULT_ROUNDS,testcase=n,m=DEFAULT_RANGES,x=DEFAULT_RANGES;
     std::vector<int> steps_record;
     std::map<int, int> cumulate;
@@ -49,9 +61,10 @@ int main(int argc,char *argv[]){
                 exit(EXIT_FAILURE);
         }
     }
-    // print 
-    //printf("Rounds: %d, Range: 1~%d\n",n,m);
 
+    /*
+        This part is generating the simulation (e.g. roll the dices)
+    */
     int count=0,*count_arr,total=0,avg_total=0,avg=0;
     count_arr=(int *)calloc(m,sizeof(int));
     // run testcase time
@@ -72,6 +85,7 @@ int main(int argc,char *argv[]){
             printf("%d: %d(%.3f)\n",i,count_arr[i],(float)count_arr[i]/total);
         }
         printf("Total steps: %d\n",total);
+        // Push the result in this iteration into steps_record
         steps_record.push_back(total);
         avg_total+=total;
         count=0;
@@ -80,25 +94,31 @@ int main(int argc,char *argv[]){
     }
     printf("================================\n");
     printf("Average X: %f\n",(float)avg_total/avg);
+    // Sorting the result in steps_record
     std::sort(steps_record.begin(),steps_record.end(),comp);
     int x_count=0;
+    // Get summation from steps_record, and then cumulate all the record in steps_record into cumulate (std::map)
     for (std::vector<int>::iterator it=steps_record.begin(); it!=steps_record.end(); ++it){
-        //printf("%d ",*it);
         if(*it == x){
             x_count++;
         }
         cumulate[*it]++;
     }
 
-    printf("P{X=%d}= %f\n",x, (float)x_count/steps_record.size());
+    //printf("P{X=%d}= %f\n",x, (float)x_count/steps_record.size());
 
     // Write file
     int last_index;
     FILE *fp_plot;
     fp_plot = fopen("simulation.output","w+");
+    // Get the last(e.g. Maximum ) value 
     if(!cumulate.empty())
         last_index=(--cumulate.end())->first;
-    //fprintf(fp_plot,"# testcase map.size last_index\n");
+    /* Store 3 variable into the output file header (can be utilized by other program)
+        testcase
+        map.size
+        last_index
+    */
     fprintf(fp_plot,"# %d %d %d\n",testcase,(int)cumulate.size(),last_index);
     /*for(auto it = cumulate.cbegin(); it != cumulate.cend(); ++it)
     {
@@ -107,6 +127,7 @@ int main(int argc,char *argv[]){
         //std::cout << it->first << " " << it->second.first << " " << it->second.second << "\n";
     }*/
 
+    // Output the result with format 
     for(int i=1;i<=last_index;i++){
         if(cumulate.find(i)!=cumulate.end()){
             printf("[%d]: %d (%f)\n",i,cumulate.at(i),(float)cumulate.at(i)/steps_record.size());
