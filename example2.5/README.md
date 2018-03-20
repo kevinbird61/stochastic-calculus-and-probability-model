@@ -1,5 +1,16 @@
 # Example 2.5
 
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+* [Example 2.5](#example-25)
+	* [How to use?](#how-to-use)
+	* [Result](#result)
+	* [Author](#author)
+
+<!-- /code_chunk_output -->
+
 ## How to use?
 
 * Requirement
