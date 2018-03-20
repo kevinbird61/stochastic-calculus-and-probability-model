@@ -2,12 +2,18 @@
 
 ## How to use?
 
+* Requirement
+    * gnuplot
+    ```bash
+    sudo apt install gnuplot build-essential
+    ```
+
 * Compile and run the default testcase: 
     * range: `1~5`
     * testcase: **`100`**
-```bash
-make
-```
+    ```bash
+    make
+    ```
 
 ## Result 
 
