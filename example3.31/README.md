@@ -12,7 +12,7 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
     - [Result](#result)
     - [Comparison/Time Complexity](#comparisontime-complexity)
         - [Formula](#formula)
-        - [Time Complexity](#time-complexity)
+        - [Time Complexity Analysis](#time-complexity-analysis)
     - [Author](#author)
 
 <!-- /TOC -->
@@ -71,15 +71,16 @@ $$P(m,r) = \sum_{j=1}^{m-r+1} P(m-j,r-1) \cdot C_j^m \cdot ( \frac{P_r}{\sum_{j=
 
 $$Starting \ from: P(m,1) = 1, if \ m>=1 ; P(m,1) = 0, if \ m==0$$
 
-### Time Complexity
+### Time Complexity Analysis
 
 * *Mathematic model in `Example 2.5`*: 
-$$O(M^n)$$
+    * In the implementation of `example2.5/mathematic.cc` is using `2` nested for loop, so the time complexity of probability calculation will be: $$O(M N^n)$$ , which there have multiple for `n` times with the probability
+
+    * Which the size of `N` is depended on `M`
 
 * *Mathematic model in `Example 3.31`*:
-    * Time complexity of recursive function : $$O(N)$$
-
-    * So the result should be: $$O(N \cdot M^n)$$
+    * In the implementation of `example3.31/mathematic.cc` is using several `recursive` functions to construct the probability result.
+    * And the time complexity of recursive function is : $$O(N)$$
 
 ## Author
 
