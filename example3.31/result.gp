@@ -13,4 +13,5 @@ set key right
 # Plot
 plot \
 "simulation.output" using 1:2 with linespoints linewidth 2 lt rgb "#FF0000" title "simulation(Example 2.5)", \
-"mathematic.output" using 1:2 with linespoints linewidth 2 lt rgb "#00FF00" title "mathematic(Example 3.31)"
+"mathematic.output" using 1:2 with linespoints linewidth 2 lt rgb "#0000FF" title "mathematic(Example 2.5)", \
+"mathematic_3_31.output" using 1:2 with linespoints linewidth 2 lt rgb "#00FF00" title "mathematic(Example 3.31)"

@@ -11,6 +11,8 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
     - [Run the program](#run-the-program)
     - [Result](#result)
     - [Comparison/Time Complexity](#comparisontime-complexity)
+        - [Formula](#formula)
+        - [Time Complexity](#time-complexity)
     - [Author](#author)
 
 <!-- /TOC -->
@@ -36,10 +38,10 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
 
 * Let's see the content in `Makefile`:
     * **First**:
-        * Compile mathematic model program ( under `example 3.31` ) and the simulation program ( under `example 2.5` )
+        * Compile the new mathematic model program ( under `example 3.31` ) , mathematic model program ( under `example 2.5` ),and the simulation program ( under `example 2.5` )
     * **Second**:
         * Similar to the demo in `example 2.5`, we run the simulation program first, and store the result into `simulation.output`.
-        * And then run the mathematic model program, and directly pipe its output content into `mathematic.output`.
+        * And then run the mathematic model program (both `2.5` and `3.31`), and directly pipe their output content into `mathematic.output`,`mathematic_3_31.output` respectively.
     * **Last**:
         * After generating all the result into output file with specified format, then we can using the gnuplot script - `result.gp` to plot the result into `PNG` format.
 
@@ -53,7 +55,9 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
 
 ## Comparison/Time Complexity
 
-> This part will need to install the chrome extension: [**`Github with MathJax`**](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), then can see the correct mathematic formula
+> This part will need to install the chrome extension: [**`Github with MathJax`**](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), then can see the correct mathematic formula 
+
+### Formula 
 
 * We can now see the mathematic model between 2 example (e.g. `2.5` & `3.31`)
 
@@ -67,6 +71,15 @@ $$P(m,r) = \sum_{j=1}^{m-r+1} P(m-j,r-1) \cdot C_j^m \cdot ( \frac{P_r}{\sum_{j=
 
 $$Starting \ from: P(m,1) = 1, if \ m>=1 ; P(m,1) = 0, if \ m==0$$
 
+### Time Complexity
+
+* *Mathematic model in `Example 2.5`*: 
+$$O(M^n)$$
+
+* *Mathematic model in `Example 3.31`*:
+    * Time complexity of recursive function : $$O(N)$$
+
+    * So the result should be: $$O(N \cdot M^n)$$
 
 ## Author
 
