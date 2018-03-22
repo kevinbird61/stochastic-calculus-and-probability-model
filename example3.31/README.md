@@ -1,8 +1,5 @@
 # Example 3.31
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
-
 This part will provide an `alternative mathematic model` for calculate the probability of each outcome occurs at least one time.
 
 Instead of using venn diagram to solve this problem, example 3.31 using `conditional probability` to calculate P(n,k), which `n` means the execution time, and `k` means the categories of outcome.
@@ -56,17 +53,20 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
 
 ## Comparison/Time Complexity
 
+> This part will need to install the chrome extension: [**`Github with MathJax`**](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), then can see the correct mathematic formula
+
 * We can now see the mathematic model between 2 example (e.g. `2.5` & `3.31`)
 
 * *Mathematic model in `Example 2.5`:*
 
-$$P\{X=N\} = \sum_{i=1}^m P_i (1-P_i)^{n-1} - \sum_{i<j} (P_i+P_j)(1-Pi-Pj)^{n-1} + \sum_{i<j<k} (P_i+P_j+P_k)(1-P_i-P_j-P_k)^{n-1} - \dots $$
+$$P(X=N) = \sum_{i=1}^m P_i (1-P_i)^{n-1} - \sum_{i<j} (P_i+P_j)(1-Pi-Pj)^{n-1} + \sum_{i<j<k} (P_i+P_j+P_k)(1-P_i-P_j-P_k)^{n-1} - \dots $$
 
 * *Mathematic model in `Example 3.31`:*
 
 $$P(m,r) = \sum_{j=1}^{m-r+1} P(m-j,r-1) \cdot C_j^m \cdot ( \frac{P_r}{\sum_{j=1}^{r} P_j})^j \cdot (1 - \frac{P_r}{\sum_{j=1}^{r} P_j})^{m-j}$$
 
 $$Starting \ from: P(m,1) = 1, if \ m>=1 ; P(m,1) = 0, if \ m==0$$
+
 
 ## Author
 
