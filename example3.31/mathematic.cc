@@ -5,6 +5,10 @@
 #include <time.h>
 #include <cmath>
 #include <ansi_color.h>
+/* Default value
+    DEFAULT_R = default range, e.g. the event number
+    DEFAULT_M = default execution times
+*/
 #define DEFAULT_R 5
 #define DEFAULT_M 100
 /* Global variables, array list
@@ -13,12 +17,12 @@
 float *p;
 
 /* Function 
-    permutations: Calculate C(m, j)
+    combination: Calculate C(m, j)
     conditional_probability: the new way to calculate probability, with execution time: "m" and current posible categories: "r"
     helper: print out the helping information
 */
 // calculate permutation
-int permutations(int m,int n);
+int combination(int m,int n);
 // calculate with conditional probability - recursive function
 float conditional_probability(int m,int r);
 // command helper 
@@ -63,6 +67,7 @@ int main(int argc, char *argv[]){
     // Calculate the probability by condition probability method, calculate from r~m
     float result=0.0,pre=0.0;
     for(int i=1;i<=m;i++){
+        // if execution times < event number, then result=0
         if(i>=r)
             result=conditional_probability(i,r);
         else 
@@ -78,9 +83,12 @@ int main(int argc, char *argv[]){
 }
 
 float conditional_probability(int m,int r){
+    // if r larger than m, we don't need to discuss this case
     if(r>m)
         return 0;
     if(r==1){
+        // if r == 1 , and if m >= 1, then there have only one result; if m=0, it means
+        // there no any execution time left.
         if(m>=1)
             return 1.0;
         else if(m==0)
@@ -96,7 +104,7 @@ float conditional_probability(int m,int r){
         // Sigma: r ~ (m-r+1)
         for(int i=1;i<=(m-r+1);i++){
             // Get result recursively
-            result_p+=(conditional_probability(m-i,r-1)*permutations(m,i)*powf(p[r-1]/sum_Pr,i)*powf((float)1-(p[r-1]/sum_Pr),m-i));
+            result_p+=(conditional_probability(m-i,r-1)*combination(m,i)*powf(p[r-1]/sum_Pr,i)*powf((float)1-(p[r-1]/sum_Pr),m-i));
         }
         
         // return the result of current stage
@@ -104,8 +112,8 @@ float conditional_probability(int m,int r){
     }
 }
 
-int permutations(int m,int n){
-    return (n==0||m==n)?1:permutations(m-1,n)+permutations(m-1,n-1);
+int combination(int m,int n){
+    return (n==0||m==n)?1:combination(m-1,n)+combination(m-1,n-1);
 }
 
 void helper(FILE *fp,char *prog){

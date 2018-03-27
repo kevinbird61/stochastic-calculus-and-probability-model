@@ -1,5 +1,7 @@
 # Example 3.31
 
+> source code : https://github.com/kevinbird61/stochastic-calculus-and-probability-model/tree/master/example3.31
+
 This part will provide an `alternative mathematic model` for calculate the probability of each outcome occurs at least one time.
 
 Instead of using venn diagram to solve this problem, example 3.31 using `conditional probability` to calculate P(n,k), which `n` means the execution time, and `k` means the categories of outcome.
@@ -13,6 +15,9 @@ Instead of using venn diagram to solve this problem, example 3.31 using `conditi
     - [Comparison/Time Complexity](#comparisontime-complexity)
         - [Formula](#formula)
         - [Time Complexity Analysis](#time-complexity-analysis)
+            - [*Mathematic model in `Example 2.5`*](#mathematic-model-in-example-25)
+            - [*Mathematic model in `Example 3.31`*](#mathematic-model-in-example-331)
+            - [Comparion with Example `2.5`,`3.31`](#comparion-with-example-25331)
     - [Author](#author)
 
 <!-- /TOC -->
@@ -73,14 +78,32 @@ $$Starting \ from: P(m,1) = 1, if \ m>=1 ; P(m,1) = 0, if \ m==0$$
 
 ### Time Complexity Analysis
 
-* *Mathematic model in `Example 2.5`*: 
-    * In the implementation of `example2.5/mathematic.cc` is using `2` nested for loop, so the time complexity of probability calculation will be: $$O(M N^n)$$ , which there have multiple for `n` times with the probability
+#### *Mathematic model in `Example 2.5`*
 
-    * Which the size of `N` is depended on `M`
+* In the implementation of `example2.5/mathematic.cc`, we can see the formula above. In this term , we have number `r` of combination `C(r,i)`, which `r` represent as the number of categories; And **total number of terms** in formula will be: $$\sum_{i=1}^r C_i^r$$
 
-* *Mathematic model in `Example 3.31`*:
-    * In the implementation of `example3.31/mathematic.cc` is using several `recursive` functions to construct the probability result.
-    * And the time complexity of recursive function is : $$O(N)$$
+* And we can see the terms of combinations : $$\sum_{k=0}^n C_k^n = 2^n$$ , so in our terms: $$\sum_{k=1}^n C_k^n = 2^n - 1$$
+
+* Then we can get the time complexity will be: $$O(\sum_{i=1}^r C_i^r) = O(2^r-1)=O(2^r)$$
+
+* And why using `combination`? Because as the formula above, we can see each term has: $$\sum_{i<j<k...<r}, r = number\ of\ categories$$ , so we can use `combination` rather than `permutation`.
+
+#### *Mathematic model in `Example 3.31`*
+
+* In the implementation of `example3.31/mathematic.cc` is using several `recursive` functions to construct the probability result.
+
+* Totally we have number of **(m-r)** terms in **`P(m,r)`**, and the result will be the **combination with repetition**: $$H_r^{m-r}$$ , then we can transform into combination :$$C_r^{(m-r)+r-1} = C_r^{m-1} = \frac{(m-1)!}{r! \cdot (m-r-1)!}= \frac{(m-1)\cdot(m-2) ...(m-r)}{r!} $$
+* After eliminate `r!`, we can have the polynomial function `m^r`: $$O(\frac{(m-1)\cdot(m-2) ...(m-r)}{r!}) := O((m-1)\cdot(m-2) ...(m-r)) := O(m^r)$$ , which `m` represent **`total execution times`**, and `r` represent **`number of categories`**
+
+
+#### Comparion with Example `2.5`,`3.31`
+
+|  | Time Complexity |
+| ------ | ------ | 
+| `Example 2.5` | $$O(2^r)$$ |
+| `Example 3.31` | $$O(m^r)$$ |
+
+As the table showing above, we can see **when the execution time(e.g. `m`) increase, the mathematic model program of `Example 3.31` will more time than `2.5` to complete.**
 
 ## Author
 
