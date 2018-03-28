@@ -4,6 +4,8 @@
 #include <map>
 #include <utility>
 #include <string>
+#include <unistd.h>
+#include "ansi_color.h"
 // define data structure 
 struct rawdata{
     std::string description;
@@ -26,9 +28,11 @@ class parse_args{
             std::string type);
         // get value 
         rawdata get_args_val(std::string flags);
-        
+        // helper info 
+        void helper(FILE *fp,char *prog);
     private:
         std::map<std::string, rawdata> args;
+        std::string options;
 };
 
 #endif

@@ -14,7 +14,7 @@ int main(int argc,char *argv[]){
     args->parsing(argc,argv);
     // print out 
     printf("%s\n",args->get_args_val("v").val.c_str());
-    printf("%s\n",args->get_args_val("l").val.c_str());
+    printf("%d\n",std::atoi(args->get_args_val("l").val.c_str()));
     printf("%s\n",args->get_args_val("k").val.c_str());
 
     printf("%lf\n",poisson(1,2));

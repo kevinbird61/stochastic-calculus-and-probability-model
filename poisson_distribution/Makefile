@@ -4,7 +4,7 @@ OBJS:=../utils/poisson.o ../utils/parse_arg.o
 OBJS_A:=part_a.o $(OBJS)
 OBJS_B:=part_b.o $(OBJS)
 CXX=g++
-CXXFLAGS:=-std=c++11
+CXXFLAGS:=-std=c++14
 
 all: part_a part_b
 
