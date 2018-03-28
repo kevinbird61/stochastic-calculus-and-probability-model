@@ -14,7 +14,7 @@ int parse_args::parsing(int argc,char *argv[]){
         switch(c){
             case 'h':
                 helper(stdout,argv[0]);
-                exit(1);
+                exit(0);
             break;
             default:
                 args[std::string(&c)].val=std::string(optarg);
