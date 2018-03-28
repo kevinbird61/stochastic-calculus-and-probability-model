@@ -71,6 +71,14 @@
     ![](simulation_large.png)
     * You can see it's more fit with the curve from mathematic model!
 
+## Difference (TODO)
+
+* Measure the difference between simulation and mathematic result!
+
+```
+Difference = 100%×(Simulation - Math) / Math
+```
+
 ## Author
 
 * Kevin Cyu, kevinbird61@gmail.com
