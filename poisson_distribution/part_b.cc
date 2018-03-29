@@ -13,24 +13,25 @@ int main(int argc,char *argv[]){
     // parse it!
     args->parsing(argc,argv);
 
-    float p = std::atof(args->get_args_val("p").val.c_str());
-    int l = std::atoi(args->get_args_val("l").val.c_str());
+    double p = std::atof(args->get_args_val("p").val.c_str());
+    double l = std::atof(args->get_args_val("l").val.c_str());
     int upperbound = std::atoi(args->get_args_val("k").val.c_str());
 
     // Write file
-    FILE *fp;
-    fp=fopen("part_b.output","w+");
+    FILE *fp,*fp_loop;
+    fp=fopen("output/part_b.output","w+");
     // Set upperbound for gnuplot to use
     fprintf(fp,"# %d\n",upperbound);
 
     // Calculate 
-    for(int i=0;i<=upperbound;i++){
+    for(double i=1;i<=upperbound;i++){
         // Get total P{X+Y=i}
         double p_s,px=0,py=0;
         p_s = poisson(l,i);
         px = poisson(l*p,i*p);
         py = poisson(l*(1-p),i*(1-p));
-        fprintf(fp,"%d %lf %lf %lf %lf\n",i,p_s,px*py,px,py);
+
+        fprintf(fp,"%lf %lf %lf %lf %lf\n",i,p_s,px*py,px,py);
     }
 
     return 0;

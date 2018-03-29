@@ -25,15 +25,15 @@ After `example 2.5`, `3.31`, the program has been refactor a lot, make code reus
 * It will be implemented in `part_a.cc`
 ![](../res/example2_37.png)
 
-Consider the formula: $$P\{X+Y=n\}=\sum_{k=0}^nP\{X=k, Y=n-k\}   $$
+Consider the formula: $$P(X+Y=n)=\sum_{k=0}^nP(X=k, Y=n-k)   $$
 
-$$ = \sum_{k=0}^nP\{X=k\} \cdot P\{Y=n-k\}$$
+$$ = \sum_{k=0}^nP(X=k) \cdot P(Y=n-k)$$
 
 So that we can :
 
 * **Directly** calculate the *S=X+Y* with: $$\frac{e^{-(\lambda_1+\lambda_2)}}{n!} \cdot (\lambda_1 + \lambda_2)^n$$
 
-* **Separately** calculate *X* and *Y* with: $$P\{X=k\} =\frac{e^{-(\lambda_1)}}{n!} \cdot (\lambda_1)^n, P\{Y=n-k\} =\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}$$, and need to consider the summation, from **k=0~n**: $$\sum_{k=0}^n ...$$
+* **Separately** calculate *X* and *Y* with: $$P(X=k) =\frac{e^{-(\lambda_1)}}{n!} \cdot (\lambda_1)^n, P(Y=n-k) =\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}$$, and need to consider the summation, from **k=0~n**: $$\sum_{k=0}^n ...$$
 
 * So we need to compare these two part:
     * run with command `make run && make plot` to run the program and plot: $$k=40,\ \lambda_1=1,\ \lambda_2=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.

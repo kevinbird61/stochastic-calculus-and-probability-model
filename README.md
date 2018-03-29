@@ -26,9 +26,11 @@ Mostly use **`C++`** to do both simulation/mathematic work and validation.
 ### [Poisson Distribution](poisson_distribution/)
 
 * Merge 
+
 ![](poisson_distribution/part_a.png)
 
 * Split
+
 ![](poisson_distribution/part_b.png)
 
 

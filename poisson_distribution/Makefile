@@ -5,10 +5,11 @@ PLOT_B:=part_b.png
 OBJS:=../utils/poisson.o ../utils/parse_arg.o
 OBJS_A:=part_a.o $(OBJS)
 OBJS_B:=part_b.o $(OBJS)
+OBJDIR:=output
 CXX=g++
 CXXFLAGS:=-std=c++14
 
-run: all
+run: $(OBJDIR) all
 	# running program to generate
 	./$(EXEC_A) -k 40
 	./$(EXEC_B) -k 40
@@ -31,6 +32,9 @@ plot_b: part_b
 	gnuplot result_b.gp
 
 plot: plot_a plot_b
+
+$(OBJDIR):
+	mkdir -p $@
 
 clean:
 	rm $(OBJS_A) $(OBJS_B) $(EXEC_A) $(EXEC_B)
