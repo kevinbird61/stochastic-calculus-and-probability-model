@@ -3,6 +3,11 @@
 #include "../utils/poisson.h"
 #include "../utils/parse_arg.h"
 
+// For gathering simulation result
+struct multi{
+    int x,y,s;
+};
+
 int main(int argc,char *argv[]){
     // create parsing args object
     parse_args *args = new parse_args();
@@ -46,7 +51,11 @@ int main(int argc,char *argv[]){
     // ===================================== Simulation Part ===================================== 
     int simulation_time = std::atoi(args->get_args_val("s").val.c_str());
 
-    std::map<int,int> x,y,S;
+    std::map<int,int> x,y,S; 
+    std::map<int,multi> sim;
+
+    FILE *fpx;
+    fpx=fopen("output/part_a_sim.output","w+");
 
     for(int i=0;i<simulation_time;i++){
         x[poisson_rand_gen(lambda1)]++;
@@ -54,16 +63,20 @@ int main(int argc,char *argv[]){
         S[poisson_rand_gen(lambda1+lambda2)]++;
     }
 
-    /*for(auto& it: x){
-        printf("%d %d\n",it.first,it.second);
+    for(auto& it: x){
+        sim[it.first].x=it.second;
     }
 
     for(auto& it: y){
-        printf("%d %d\n",it.first,it.second);
-    }*/
+        sim[it.first].y=it.second;
+    }
 
     for(auto& it: S){
-        printf("%d %d\n",it.first,it.second);
+        sim[it.first].s=it.second;
+    }
+
+    for(auto& it: sim){
+        fprintf(fpx,"%d %f %f %f %f\n",it.first,(float)it.second.s/simulation_time,(float)(it.second.x*it.second.y)/(simulation_time*simulation_time),(float)it.second.x/simulation_time,(float)it.second.y/simulation_time);
     }
 
     return 0;
