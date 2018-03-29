@@ -11,6 +11,7 @@ CXXFLAGS:=-std=c++14
 run: all
 	# running program to generate
 	./$(EXEC_A) -k 40
+	./$(EXEC_B) -k 40
 
 all: part_a part_b
 
@@ -24,9 +25,12 @@ part_b: $(OBJS_B)
 	$(CXX) $(CXXFLAGS) -c $^
 
 plot_a: part_a
-	gnuplot result.gp
+	gnuplot result_a.gp
 
-plot: plot_a 
+plot_b: part_b
+	gnuplot result_b.gp
+
+plot: plot_a plot_b
 
 clean:
 	rm $(OBJS_A) $(OBJS_B) $(EXEC_A) $(EXEC_B)
