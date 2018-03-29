@@ -8,6 +8,6 @@ double factorial(int k){
     return sum;
 }
 
-double poisson(int lambda,int k){
+double poisson(double lambda,double k){
     return exp(-lambda)*pow(lambda,k)/factorial(k);
 }

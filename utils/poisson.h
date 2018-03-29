@@ -5,6 +5,6 @@
 
 double factorial(int k);
 // Get P(X=k)
-double poisson(int lambda,int k);
+double poisson(double lambda,double k);
 
 #endif
