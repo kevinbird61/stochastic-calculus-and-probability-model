@@ -11,8 +11,8 @@ CXXFLAGS:=-std=c++14
 
 run: $(OBJDIR) all
 	# running program to generate
-	./$(EXEC_A) -k 30
-	./$(EXEC_B) -k 30
+	./$(EXEC_A) -k 20
+	./$(EXEC_B) -k 20
 
 all: part_a part_b
 

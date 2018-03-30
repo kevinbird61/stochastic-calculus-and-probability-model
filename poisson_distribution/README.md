@@ -87,7 +87,7 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 #### Result
 
 * So we need to compare these two part:
-    * run with command `make run && make plot` to run the program and plot: $$k=40,\ \lambda_X=1,\ \lambda_Y=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.
+    * run with command `make run && make plot` to run the program and plot: $$k=20,\ \lambda_X=1,\ \lambda_Y=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.
     ![](part_a.png)
 * As the `part_a.png` shown, two line match perfectly. It means that the results generate `directly` or `separately` are the same.
 
@@ -102,7 +102,7 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 * It will be implemented in `part_b.cc`
 ![](../res/example3_23.png)
 
-* Testing with statistics: $$k=40,\ \lambda=10,\ p=0.4$$, also if you want to adjust, please using `./part_b.out -h` to see more.
+* Testing with statistics: $$k=20,\ \lambda=10,\ p=0.4$$, also if you want to adjust, please using `./part_b.out -h` to see more.
 ![](part_b.png)
 
 #### Difference (TODO)
