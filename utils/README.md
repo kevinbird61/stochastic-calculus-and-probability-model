@@ -35,6 +35,14 @@ $ ./a.out
 5
 ```
 
+## event
+
+* Provide class `event` for discrete event utility.
+
+## rand_gen
+
+* provide random variable generation.
+
 ## poisson 
 
 * Generate the Poisson probability : $$p(i) = P\{X=n\} = \frac{e^{-\lambda}}{n!} \cdot \lambda^n, \ \ \  n=0,1, ...$$

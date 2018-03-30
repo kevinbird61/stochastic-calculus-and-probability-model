@@ -18,7 +18,7 @@ int main(int argc,char *argv[]){
     args->set_args_rules("1","lambda 1 of Poisson X","1","int");
     args->set_args_rules("2","lambda 2 of Poisson Y","2","int");
     args->set_args_rules("k","upperbound of k (for S, which S=X+Y)","100","int");
-    args->set_args_rules("s","simulation times","100","int");
+    args->set_args_rules("s","simulation times","10000","int");
     // parse it!
     args->parsing(argc,argv);
 
@@ -85,13 +85,7 @@ int main(int argc,char *argv[]){
     rand_gen *gen = new rand_gen();
     event_list *elist = new event_list();
     int rnt=simulation_time;
-    /*while(rnt){
-        // printf("%lf\n",gen->exponential(lambda2,5*lambda1));
-        event_type x;
-        x.timestamp = gen->exponential(lambda2,5);
-        x.type = std::string("X");
-        elist->set(x);
-    }*/
+    FILE *fp_sim = fopen("output/part_a_sim.output","w+");
     // init with one X, Y event
     event_type X,Y,S;
     X.timestamp=0;
@@ -103,14 +97,16 @@ int main(int argc,char *argv[]){
     while(rnt){
         // pop out
         if(elist->get(S)){
-            if(S.type=="X"){
-                X.timestamp=gen->exponential(lambda1,5);
+            if(S.type==std::string("X")){
+                X.timestamp=gen->exponential(lambda1,5*lambda1);
                 X.type=std::string("X");
+                printf("X: %lf\n",X.timestamp);
                 elist->set(X);
             }
-            else{
-                Y.timestamp=gen->exponential(lambda2,5);
+            else if(S.type==std::string("Y")){
+                Y.timestamp=gen->exponential(lambda2,5*lambda2);
                 Y.type=std::string("Y");
+                //printf("%lf\n",Y.timestamp);
                 elist->set(Y);
             }
             // record S
@@ -119,17 +115,19 @@ int main(int argc,char *argv[]){
         }
     }
 
-    printf("size: %d, current time: %lf\n",(int)elist->rec.size(),elist->rec.back().timestamp);
+    //printf("size: %d, current time: %lf\n",(int)elist->rec.size(),elist->rec.back().timestamp);
     // erase the first 2 element
     elist->rec.erase(elist->rec.begin(),elist->rec.begin()+2);
-    int count=0;
-    double slot=1.0/(lambda1+lambda2),record_slot=slot;
-    printf("slot: %lf\n",slot);
-    std::map<int,int> counter;
+    int count=0,count_x=0,count_y=0;
+    double slot=1.0/(lambda1+lambda2),slot_x=1.0/lambda1,slot_y=1.0/lambda2,
+        record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
+    std::map<int,int> counter,counter_x,counter_y;
+
     while(elist->rec.size()!=0){
         event_type tmp;
         tmp=elist->rec.front();
         elist->rec.erase(elist->rec.begin(),elist->rec.begin()+1);
+        // total: S=X+Y
         if(tmp.timestamp<=record_slot)
             count++;
         else{
@@ -137,21 +135,53 @@ int main(int argc,char *argv[]){
             counter[count]++;
             count=0;
         }
+        // X
+        if(tmp.type==std::string("X")){
+            if(tmp.timestamp<=record_slot_x)
+                count_x++;
+            else{
+                record_slot_x+=slot_x;
+                counter_x[count_x]++;
+                count_x=0;
+            }
+        }
+        // Y
+        if(tmp.type==std::string("Y")){
+            if(tmp.timestamp<=record_slot_y)
+                count_y++;
+            else{
+                record_slot_y+=slot_y;
+                counter_y[count_y]++;
+                count_y=0;
+            }
+        }
+
     }
     if(count!=0)
         counter[count]++;
+    if(count_x!=0)
+        counter_x[count_x]++;
+    if(count_y!=0)
+        counter_y[count_y]++;
 
-    count=0;
+    count=0,count_x=0,count_y=0;
+
     for(auto&it : counter){
         count+=it.second;
-        //printf("%d %lf\n",it.first,(float)it.second);
     }
-    float total=0.0;
+
+    for(auto&it : counter_x){
+        //printf("X: %d %d\n",it.first,it.second);
+    }
+
+    for(auto&it : counter_y){
+        //printf("Y: %d %d\n",it.first,it.second);
+    }
+
     for(auto&it : counter){
-        printf("%d %lf\n",it.first,(float)it.second/count);
-        total+=(float)it.second/count;
+        fprintf(fp_sim,"%d %lf\n",it.first,(float)it.second/count);
     }
-    printf("%f\n",total);
+    //printf("%f\n",total);
 
     return 0;
 }

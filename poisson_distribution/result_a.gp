@@ -11,8 +11,4 @@ set key right
 # Plot
 plot \
 "output/part_a.output" using 1:2 with linespoints linewidth 2 lt rgb "#FF0000" title "P(X+Y)", \
-"output/part_a.output" using 1:3 with linespoints linewidth 2 lt rgb "#0000FF" title "P(X)*P(Y)", \
-"output/part_a_sim.output" using 1:2 with linespoints linewidth 2 lt rgb "#FF00FF" title "Sim - P(X+Y)", \
-"output/part_a_sim.output" using 1:3 with linespoints linewidth 2 lt rgb "#123456" title "Sim - P(X)*P(Y)"
-#"output/part_a_sim.output" using 1:4 with linespoints linewidth 2 lt rgb "#00FF00" title "Sim - P(X)", \
-#"output/part_a_sim.output" using 1:5 with linespoints linewidth 2 lt rgb "#0F0F00" title "Sim - P(Y)",
+"output/part_a.output" using 1:3 with linespoints linewidth 2 lt rgb "#0000FF" title "P(X)*P(Y)"
