@@ -8,7 +8,7 @@ int main(int argc,char *argv[]){
     parse_args *args = new parse_args();
     // set rules 
     args->set_args_rules("p","Probability of Poisson X","0.4","float");
-    args->set_args_rules("l","lambda of Poisson N","10","int");
+    args->set_args_rules("l","lambda of Poisson N","3","int");
     args->set_args_rules("k","upperbound of k (for N, which N can derive to N1, N2 according to p and 1-p)","100","int");
     // parse it!
     args->parsing(argc,argv);
@@ -18,7 +18,7 @@ int main(int argc,char *argv[]){
     int upperbound = std::atoi(args->get_args_val("k").val.c_str());
 
     // Write file
-    FILE *fp,*fp_loop;
+    FILE *fp;
     fp=fopen("output/part_b.output","w+");
     // Set upperbound for gnuplot to use
     fprintf(fp,"# %d\n",upperbound);

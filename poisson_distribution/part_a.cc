@@ -5,7 +5,8 @@
 
 // For gathering simulation result
 struct multi{
-    int x,y,s;
+    float xy;
+    int s;
 };
 
 int main(int argc,char *argv[]){
@@ -63,20 +64,17 @@ int main(int argc,char *argv[]){
         S[poisson_rand_gen(lambda1+lambda2)]++;
     }
 
-    for(auto& it: x){
-        sim[it.first].x=it.second;
-    }
-
-    for(auto& it: y){
-        sim[it.first].y=it.second;
-    }
-
     for(auto& it: S){
         sim[it.first].s=it.second;
+        for(int i=0;i<it.first;i++){
+            sim[it.first].xy+=((x[i]+y[it.first-i])/2);
+        }
+        sim[it.first].xy /= (it.first);
     }
 
     for(auto& it: sim){
-        fprintf(fpx,"%d %f %f %f %f\n",it.first,(float)it.second.s/simulation_time,(float)(it.second.x*it.second.y)/(simulation_time*simulation_time),(float)it.second.x/simulation_time,(float)it.second.y/simulation_time);
+        // Calculate result
+        fprintf(fpx,"%d %f %f\n",it.first,(float)it.second.s/simulation_time,(float)it.second.xy/(2*simulation_time));
     }
 
     return 0;
