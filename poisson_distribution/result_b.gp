@@ -2,7 +2,7 @@ set title "Poisson Distribution - Split Part"
 set xlabel "k"
 set ylabel "Probability"
 set terminal png font " Times_New_Roman,12 "
-set output "part_b.png"
+set output "image/part_b.png"
 
 # Set xtic & xlabel
 set xtics rotate by 45 right

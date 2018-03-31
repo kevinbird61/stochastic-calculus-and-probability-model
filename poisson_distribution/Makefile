@@ -5,7 +5,7 @@ PLOT_B:=part_b.png
 OBJS:=../utils/poisson.o ../utils/parse_arg.o ../utils/rand_gen.o ../utils/event.o
 OBJS_A:=part_a.o $(OBJS)
 OBJS_B:=part_b.o $(OBJS)
-OBJDIR:=output
+OBJDIR:=output image
 CXX=g++
 CXXFLAGS:=-std=c++14
 

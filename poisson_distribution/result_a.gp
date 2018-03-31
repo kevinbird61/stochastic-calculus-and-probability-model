@@ -2,7 +2,7 @@ set title "Poisson Distribution - Merge Part"
 set xlabel "k"
 set ylabel "Probability: P(X+Y=k)"
 set terminal png font " Times_New_Roman,12 "
-set output "part_a.png"
+set output "image/part_a.png"
 
 # Set xtic & xlabel
 set xtics rotate by 45 right

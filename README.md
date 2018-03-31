@@ -27,11 +27,11 @@ Mostly use **`C++`** to do both simulation/mathematic work and validation.
 
 * Merge 
 
-![](poisson_distribution/part_a.png)
+![](poisson_distribution/image/part_a.png)
 
 * Split
 
-![](poisson_distribution/part_b.png)
+![](poisson_distribution/image/part_b.png)
 
 
 # Author 
