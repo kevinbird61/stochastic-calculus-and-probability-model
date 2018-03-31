@@ -1,3 +1,5 @@
+#!/usr/bin/gnuplot
+
 set title "Poisson Distribution - Split Part"
 set xlabel "k"
 set ylabel "Probability"

@@ -84,6 +84,8 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 
 * And then observe the simulation result, compare with mathematic one.
 
+![](image/part_a_sim.png)
+
 #### Result
 
 * So we need to compare these two part:
