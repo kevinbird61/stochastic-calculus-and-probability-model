@@ -107,6 +107,9 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 * Testing with statistics: $$k=20,\ \lambda=10,\ p=0.4$$, also if you want to adjust, please using `./part_b.out -h` to see more.
 ![](image/part_b.png)
 
+* And simulation part: 
+![](image/part_b_sim.png)
+
 #### Difference (TODO)
 
 ## Reference

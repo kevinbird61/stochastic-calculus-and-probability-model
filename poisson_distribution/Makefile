@@ -34,7 +34,10 @@ plot_a_sim: part_a
 plot_b: part_b
 	gnuplot scripts/result_b.gp
 
-plot: plot_a plot_b plot_a_sim
+plot_b_sim: part_b 
+	gnuplot scripts/result_b_sim.gp
+
+plot: plot_a plot_b plot_a_sim plot_b_sim
 
 $(OBJDIR):
 	mkdir -p $@
