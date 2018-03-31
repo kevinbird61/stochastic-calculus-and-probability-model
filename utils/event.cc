@@ -14,6 +14,17 @@ void event_list::set(const event_type x){
     std::sort(list.begin(),list.end(),comp);
 }
 
+void event_list::set(const double ts, const std::string type){
+    // create 
+    event_type x;
+    x.timestamp=ts;
+    x.type=type;
+    // push the x into list ,and sort it
+    list.push_back(x);
+    // sort it
+    std::sort(list.begin(),list.end(),comp);
+}
+
 int event_list::get(event_type& x){
     if(list.size()>0){
         x = list.back();

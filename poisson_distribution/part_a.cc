@@ -5,12 +5,6 @@
 #include "../utils/rand_gen.h"
 #include "../utils/event.h"
 
-// For gathering simulation result
-struct multi{
-    float xy;
-    int s;
-};
-
 int main(int argc,char *argv[]){
     // create parsing args object
     parse_args *args = new parse_args();
@@ -54,59 +48,32 @@ int main(int argc,char *argv[]){
     // ===================================== Simulation Part ===================================== 
     int simulation_time = std::atoi(args->get_args_val("s").val.c_str());
 
-    /*std::map<int,int> x,y,S; 
-    std::map<int,multi> sim;
-
-    FILE *fpx;
-    fpx=fopen("output/part_a_sim.output","w+");
-
-    for(int i=0;i<simulation_time;i++){
-        x[poisson_rand_gen(lambda1)]++;
-        y[poisson_rand_gen(lambda2)]++;
-        S[poisson_rand_gen(lambda1+lambda2)]++;
-    }
-
-    for(auto& it: S){
-        sim[it.first].s=it.second;
-        for(int i=0;i<it.first;i++){
-            sim[it.first].xy+=((x[i]+y[it.first-i])/2);
-        }
-        sim[it.first].xy /= (it.first);
-    }
-
-    // Third way => to construct X, Y separately, and map to an Time queue
-
-    for(auto& it: sim){
-        // Calculate result
-        fprintf(fpx,"%d %f %f\n",it.first,(float)it.second.s/simulation_time,(float)it.second.xy/(2*simulation_time));
-    }*/
-
     // discrete event simulation
     rand_gen *gen = new rand_gen();
-    event_list *elist = new event_list();
+    event_list *elist = new event_list(),*elist_x=new event_list(),*elist_y=new event_list();
     int rnt=simulation_time;
     FILE *fp_sim = fopen("output/part_a_sim.output","w+");
     // init with one X, Y event
     event_type X,Y,S;
-    X.timestamp=0;
-    X.type=std::string("X");
-    Y.timestamp=0;
-    Y.type=std::string("Y");
-    elist->set(X);
-    elist->set(Y);
+    elist->set(0,std::string("X"));
+    elist->set(0,std::string("Y"));
+
+    elist_x->set(0,std::string("X"));
+
+    elist_y->set(0,std::string("Y"));
+
+    // Scheduling S=X+Y
     while(rnt){
         // pop out
         if(elist->get(S)){
             if(S.type==std::string("X")){
-                X.timestamp=gen->exponential(lambda1,5*lambda1);
+                X.timestamp=gen->exponential(lambda1,lambda1);
                 X.type=std::string("X");
-                printf("X: %lf\n",X.timestamp);
                 elist->set(X);
             }
             else if(S.type==std::string("Y")){
-                Y.timestamp=gen->exponential(lambda2,5*lambda2);
+                Y.timestamp=gen->exponential(lambda2,lambda2);
                 Y.type=std::string("Y");
-                //printf("%lf\n",Y.timestamp);
                 elist->set(Y);
             }
             // record S
@@ -115,11 +82,38 @@ int main(int argc,char *argv[]){
         }
     }
 
+    // X
+    rnt=simulation_time;
+    while(rnt){
+        // pop out
+        if(elist_x->get(S)){
+            elist_x->set(gen->exponential(lambda1,lambda1),std::string("X"));            
+            // record S
+            elist_x->record(S);
+            rnt--;
+        }
+    }
+
+    // Y
+    rnt=simulation_time;
+    while(rnt){
+        // pop out
+        if(elist_y->get(S)){
+            elist_y->set(gen->exponential(lambda2,lambda2),std::string("Y"));            
+            // record S
+            elist_y->record(S);
+            rnt--;
+        }
+    }
+
     //printf("size: %d, current time: %lf\n",(int)elist->rec.size(),elist->rec.back().timestamp);
-    // erase the first 2 element
+    // erase the init element
     elist->rec.erase(elist->rec.begin(),elist->rec.begin()+2);
+    elist_x->rec.erase(elist_x->rec.begin(),elist_x->rec.begin()+1);
+    elist_y->rec.erase(elist_y->rec.begin(),elist_y->rec.begin()+1);
+
     int count=0,count_x=0,count_y=0;
-    double slot=1.0/(lambda1+lambda2),slot_x=1.0/lambda1,slot_y=1.0/lambda2,
+    double slot=exp(-1.0/(lambda1+lambda2)),slot_x=exp(-1.0/lambda1),slot_y=exp(-1.0/lambda2),
         record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
     std::map<int,int> counter,counter_x,counter_y;
 
@@ -135,28 +129,36 @@ int main(int argc,char *argv[]){
             counter[count]++;
             count=0;
         }
-        // X
-        if(tmp.type==std::string("X")){
-            if(tmp.timestamp<=record_slot_x)
-                count_x++;
-            else{
-                record_slot_x+=slot_x;
-                counter_x[count_x]++;
-                count_x=0;
-            }
-        }
-        // Y
-        if(tmp.type==std::string("Y")){
-            if(tmp.timestamp<=record_slot_y)
-                count_y++;
-            else{
-                record_slot_y+=slot_y;
-                counter_y[count_y]++;
-                count_y=0;
-            }
-        }
-
     }
+
+    while(elist_x->rec.size()!=0){
+        event_type tmp;
+        tmp=elist_x->rec.front();
+        elist_x->rec.erase(elist_x->rec.begin(),elist_x->rec.begin()+1);
+        // X
+        if(tmp.timestamp<=record_slot_x)
+            count_x++;
+        else{
+            record_slot_x+=slot_x;
+            counter_x[count_x]++;
+            count_x=0;
+        }
+    }
+
+    while(elist_y->rec.size()!=0){
+        event_type tmp;
+        tmp=elist_y->rec.front();
+        elist_y->rec.erase(elist_y->rec.begin(),elist_y->rec.begin()+1);
+        // X
+        if(tmp.timestamp<=record_slot_y)
+            count_y++;
+        else{
+            record_slot_y+=slot_y;
+            counter_y[count_y]++;
+            count_y=0;
+        }
+    }
+
     if(count!=0)
         counter[count]++;
     if(count_x!=0)
@@ -172,16 +174,23 @@ int main(int argc,char *argv[]){
 
     for(auto&it : counter_x){
         //printf("X: %d %d\n",it.first,it.second);
+        count_x+=it.second;
     }
 
     for(auto&it : counter_y){
         //printf("Y: %d %d\n",it.first,it.second);
+        count_y+=it.second;
     }
 
     for(auto&it : counter){
-        fprintf(fp_sim,"%d %lf\n",it.first,(float)it.second/count);
+        double p_xy=0.0;
+        for(int i=0;i<=it.first;i++){
+            // S=X+Y, X:0~it.first, Y:it.first~0
+            p_xy+=((float)counter_x[i]/count_x)*((float)counter_y[it.first-i]/count_y);
+        }
+
+        fprintf(fp_sim,"%d %lf %lf\n",it.first,(float)it.second/count,p_xy);
     }
-    //printf("%f\n",total);
 
     return 0;
 }

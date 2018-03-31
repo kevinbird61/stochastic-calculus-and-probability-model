@@ -14,8 +14,10 @@ class event_list{
     public:
         event_list();
         ~event_list();
-        // overloading 
+        // set 
         void set(const event_type x);
+        // another set
+        void set(const double ts, const std::string type);
         // get 
         int get(event_type& x);
         // size
