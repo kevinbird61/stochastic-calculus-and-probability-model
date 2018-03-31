@@ -1,3 +1,5 @@
+#!/usr/bin/gnuplot
+
 set title "Poisson Distribution - Merge Part"
 set xlabel "k"
 set ylabel "Probability: P(X+Y=k)"

@@ -26,13 +26,13 @@ part_b: $(OBJS_B)
 	$(CXX) $(CXXFLAGS) -c $^
 
 plot_a: part_a
-	gnuplot result_a.gp
+	gnuplot scripts/result_a.gp
 
 plot_a_sim: part_a
-	gnuplot result_a_sim.gp
+	gnuplot scripts/result_a_sim.gp
 
 plot_b: part_b
-	gnuplot result_b.gp
+	gnuplot scripts/result_b.gp
 
 plot: plot_a plot_b plot_a_sim
 
