@@ -9,15 +9,17 @@ OBJDIR:=output image
 CXX=g++
 CXXFLAGS:=-std=c++14
 
+.DEFAULT_GOAL:=all
+
 astyle:
 	astyle --style=google --indent=spaces=2 *.cc
 
-run: $(OBJDIR) all
+all: $(OBJDIR) part_a part_b
 	# running program to generate
 	./$(EXEC_A) -k 20 -s 100000
 	./$(EXEC_B) -k 20 -s 100000
 
-all: part_a part_b
+plot: plot_a plot_b plot_a_sim plot_b_sim
 
 part_a: $(OBJS_A)
 	$(CXX) $(CXXFLAGS) $^ -o $(EXEC_A)
@@ -39,8 +41,6 @@ plot_b: part_b
 
 plot_b_sim: part_b 
 	gnuplot scripts/result_b_sim.gp
-
-plot: plot_a plot_b plot_a_sim plot_b_sim
 
 $(OBJDIR):
 	mkdir -p $@
