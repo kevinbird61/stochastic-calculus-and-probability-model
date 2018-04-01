@@ -11,7 +11,7 @@ int main(int argc,char *argv[]){
     // set rules 
     args->set_args_rules("p","Probability of Poisson X","0.4","float");
     args->set_args_rules("l","lambda of Poisson N","3","int");
-    args->set_args_rules("k","upperbound of k (for N, which N can derive to N1, N2 according to p and 1-p)","100","int");
+    args->set_args_rules("k","upperbound of k (for N, which N can derive to N1, N2 according to p and 1-p)","10000","int");
     args->set_args_rules("s","simulation times","10000","int");
     // parse it!
     args->parsing(argc,argv);
@@ -31,12 +31,12 @@ int main(int argc,char *argv[]){
     // Calculate 
     for(double i=1;i<=upperbound;i++){
         // Get total P{X+Y=i}
-        double p_s,px=0,py=0;
+        double p_s,p_xy=0;
         p_s = poisson(l,i);
-        px = poisson(l*p,i*p);
-        py = poisson(l*(1-p),i*(1-p));
-
-        fprintf(fp,"%lf %lf %lf\n",i,p_s,px*py);
+        for(int j=0;j<=i;j++){
+            p_xy += poisson(l*p,j)*poisson(l*(1-p),(i-j));
+        }
+        fprintf(fp,"%lf %lf %lf\n",i,p_s,p_xy);
     }
 
     // ===================================== Simulation Part ===================================== 
