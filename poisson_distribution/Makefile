@@ -9,10 +9,13 @@ OBJDIR:=output image
 CXX=g++
 CXXFLAGS:=-std=c++14
 
+astyle:
+	astyle --style=google --indent=spaces=2 *.cc
+
 run: $(OBJDIR) all
 	# running program to generate
-	./$(EXEC_A) -k 20
-	./$(EXEC_B) -k 20
+	./$(EXEC_A) -k 20 -s 100000
+	./$(EXEC_B) -k 20 -s 100000
 
 all: part_a part_b
 
