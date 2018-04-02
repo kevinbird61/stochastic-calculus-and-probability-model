@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <random>
 // user-defined library
 #include "../utils/poisson.h"
 #include "../utils/parse_arg.h"
@@ -50,6 +51,9 @@ int main(int argc,char *argv[]) {
 
   // discrete event simulation
   rand_gen *gen = new rand_gen();
+  std::default_random_engine generator;
+  std::exponential_distribution<double> dist_1(lambda1),dist_2(lambda2);
+
   event_list *elist = new event_list();
   int rnt=simulation_time;
   FILE *fp_sim = fopen("output/part_a_sim.output","w+");
@@ -63,10 +67,12 @@ int main(int argc,char *argv[]) {
     // pop out
     if(elist->get(S)) {
       if(S.type=="X") {
-        elist->set(gen->exponential(lambda1),std::string("X"));
+        // elist->set(gen->exponential(lambda1),std::string("X"));
+        elist->set(dist_1(generator),std::string("X"));
         //printf("X\n");
       } else if(S.type=="Y") {
-        elist->set(gen->exponential(lambda2),std::string("Y"));
+        // elist->set(gen->exponential(lambda2),std::string("Y"));
+        elist->set(dist_2(generator),std::string("Y"));
         //printf("Y\n");
       }
       // record S
@@ -80,8 +86,7 @@ int main(int argc,char *argv[]) {
   elist->rec.erase(elist->rec.begin(),elist->rec.begin()+2);
 
   int count=0,count_x=0,count_y=0;
-  double slot=exp(-1.0/(lambda1+lambda2)),slot_x=exp(-1.0/lambda1),slot_y=exp(-1.0/lambda2),
-         record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
+  double slot=exp(-1.0/(lambda1+lambda2)),record_slot=slot,record_slot_x=slot,record_slot_y=slot;
   std::map<int,int> counter,counter_x,counter_y;
 
   while(elist->rec.size()!=0) {
@@ -101,7 +106,7 @@ int main(int argc,char *argv[]) {
       if(tmp.timestamp<=record_slot_x)
         count_x++;
       else {
-        record_slot_x+=slot_x;
+        record_slot_x+=slot;
         counter_x[count_x]++;
         count_x=0;
       }
@@ -110,7 +115,7 @@ int main(int argc,char *argv[]) {
       if(tmp.timestamp<=record_slot_y)
         count_y++;
       else {
-        record_slot_y+=slot_y;
+        record_slot_y+=slot;
         counter_y[count_y]++;
         count_y=0;
       }

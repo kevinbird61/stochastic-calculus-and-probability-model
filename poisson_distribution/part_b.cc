@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <random>
 // user-defined library
 #include "../utils/poisson.h"
 #include "../utils/parse_arg.h"
@@ -46,6 +47,9 @@ int main(int argc,char *argv[]) {
   int rnt=simulation_time;
   FILE *fp_sim = fopen("output/part_b_sim.output","w+");
 
+  std::default_random_engine generator;
+  std::exponential_distribution<double> dist_1(l*p),dist_2(l*(1-p));
+
   event_type S;
   // init with rand
   if(gen->frand(0,1)>p) {
@@ -62,9 +66,11 @@ int main(int argc,char *argv[]) {
       // Using probability P to decide which event will be push
       if(gen->frand(0,1)>p) {
         // become Y event
-        elist->set(gen->exponential(l*(1-p)),std::string("Y"));
+        // elist->set(gen->exponential(l*(1-p)),std::string("Y"));
+        elist->set(dist_2(generator),std::string("Y"));
       } else {
-        elist->set(gen->exponential(l*p),std::string("X"));
+        // elist->set(gen->exponential(l*p),std::string("X"));
+        elist->set(dist_1(generator),std::string("X"));
       }
       // record
       elist->record(S);
@@ -77,8 +83,7 @@ int main(int argc,char *argv[]) {
 
   // check
   int count=0,count_x=0,count_y=0;
-  double slot=exp(-1.0/(l)),slot_x=exp(-1.0/(l*p)),slot_y=exp(-1.0/(l*(1-p))),
-         record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
+  double slot=exp(-1.0/(l)),record_slot=slot,record_slot_x=slot,record_slot_y=slot;
   std::map<int,int> counter,counter_x,counter_y;
 
   while(elist->rec.size()!=0) {
@@ -98,7 +103,7 @@ int main(int argc,char *argv[]) {
       if(tmp.timestamp<=record_slot_x)
         count_x++;
       else {
-        record_slot_x+=slot_x;
+        record_slot_x+=slot;
         counter_x[count_x]++;
         count_x=0;
       }
@@ -107,7 +112,7 @@ int main(int argc,char *argv[]) {
       if(tmp.timestamp<=record_slot_y)
         count_y++;
       else {
-        record_slot_y+=slot_y;
+        record_slot_y+=slot;
         counter_y[count_y]++;
         count_y=0;
       }
