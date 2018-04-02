@@ -10,7 +10,7 @@ int main(int argc,char *argv[]) {
   // create parsing args object
   parse_args *args = new parse_args();
   // set rules
-  args->set_args_rules("p","Probability of Poisson X","0.4","float");
+  args->set_args_rules("p","Probability of Poisson X","0.5","float");
   args->set_args_rules("l","lambda of Poisson N","3","int");
   args->set_args_rules("k","upperbound of k (for N, which N can derive to N1, N2 according to p and 1-p)","10000","int");
   args->set_args_rules("s","simulation times","10000","int");

@@ -29,6 +29,8 @@ After `example 2.5`, `3.31`, the program has been refactor a lot, make code reus
 * It will be implemented in `part_a.cc`
 ![](../res/example2_37.png)
 
+--- 
+
 #### Mathematic Model
 
 * Because N1,N2 is **independent**, so we know N1=> $$N_1 | N=n \sim Binomial(n,p)$$, which N2: $$N_2 | N=n \sim Binomial(n,1-p)$$ , Both N1,N2 is a sum of `n` independent *Bernoulli(p)* random variables, with `Binomial(N,P)`, N and P represent **Number and Probability**.
@@ -78,34 +80,52 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 \end{array}$
 , and need to consider the summation, from **k=0~n**: $$\sum_{k=0}^n ...$$
 
+--- 
+
 #### Simulation Model
 
-* We can use poisson random variable to simulate a process with poisson distribution.
+* We can use exponential distribution: $$f(x)=\lambda \cdot e^{-\lambda\cdot x}$$, which let `x` be a random number to get a **random variable** from exponential distribution.
 
-* And then observe the simulation result, compare with mathematic one.
+* In my implementation, I use C++ STL (`standard library`) - `<random>` to do this.
 
-![](image/part_a_sim.png)
+##### Implementation Detail 
+
+* First, I using self-defined class - `event_list` as my event queue. See more about [`event_list.`](../utils/event_list.h)
+
+* And scheduling 2 individual event: `X`, `Y` into event queue for initialization, then we can start our simulation. End condition is the number you can set in arguments before starting program by `-s`.
+
+* Second, pop out the element from `event_list`, and depend on its type (e.g. is `X` or `Y`?) to schedule next event with **exponential random variable** as timestamp and push back into `event_list`. And the old event will be record into this `event_list` object (treat like a event history, sort by its timestamp.). *Do this routine until reaching the number we set by specifying `-s`.*
+
+* After event scheduling process has been done, we now can count the ratio of event arrival in each time scale.
+    * For example, between timestamp `0.0~1.0`, we get `5` event arrival during this time scale; And `1.0~2.0`, we get `4` as event arrival.
+    * Now, assume `2.0` is the end point of simulation, we now have 2 result: `X=5` and `X=4`, both have 1 occurance.
+    * Then we can say: P(X=5)=1/(1+1)=`0.5`=`50%`=P(X=4) !
+
+* And now we have the history record in object of `event_list`, which record the type of each event, then we can pop it out and get the `P(X)`, `P(Y)` and `P(X+Y)`, with specified value of time scale: $$time\ scale = e(-1/(\lambda_1+\lambda_2))$$, which $$rate\ parameter = \lambda\ , scale\ parameter = \ 1/\lambda = \beta $$
+
+* Then we can count the arrival rate in this time scale to finish our simulation!
 
 #### Result
 
-* So we need to compare these two part:
-    * run with command `make run && make plot` to run the program and plot: $$k=20,\ \lambda_X=1,\ \lambda_Y=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.
-    ![](image/part_a.png)
-* As the `part_a.png` shown, two line match perfectly. It means that the results generate `directly` or `separately` are the same.
+* So we need to compare `simulation` and `mathematic` model:
+    * run with command `make && make plot` to run the program and plot: $$k=20,\ \lambda_X=1,\ \lambda_Y=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.
+    * **Mathematic Model**
+        ![](image/part_a.png)
+    * **Simulation Model**
+        ![](image/part_a_sim.png)
 
-* And there are some difference between simulation and mathematic results.
-    * Compare `Sim - P(X)*P(Y)` and `P(X)*P(Y)`, 
-
+* We can see, both `mathematic` and `simulation` model all have the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**
 
 #### Difference (TODO)
 
+--- 
 
 ### Example 3.23 (Split)
 * It will be implemented in `part_b.cc`
 
 ![](../res/example3_23.png)
 
-* Testing with statistics: $$k=20,\ \lambda=10,\ p=0.4$$, also if you want to adjust, please using `./part_b.out -h` to see more.
+* Testing with statistics: $$k=20,\ \lambda=3,\ p=0.5$$, also if you want to adjust, please using `./part_b.out -h` to see more.
 
 ![](image/part_b.png)
 
