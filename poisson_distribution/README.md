@@ -90,28 +90,31 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 
 ##### Implementation Detail 
 
-* First, I using self-defined class - `event_list` as my event queue. See more about [`event_list.`](../utils/event_list.h)
+* **`Step 1`**, I using self-defined class - `event_list` as my event queue. See more about [`event_list.`](../utils/event_list.h)
 
-* And scheduling 2 individual event: `X`, `Y` into event queue for initialization, then we can start our simulation. End condition is the number you can set in arguments before starting program by `-s`.
+* **`Step 2`**, scheduling 2 individual event: `X`, `Y` into event queue for initialization, then we can start our simulation. End condition is the number you can set in arguments before starting program by `-s`.
 
-* Second, pop out the element from `event_list`, and depend on its type (e.g. is `X` or `Y`?) to schedule next event with **exponential random variable** as timestamp and push back into `event_list`. And the old event will be record into this `event_list` object (treat like a event history, sort by its timestamp.). *Do this routine until reaching the number we set by specifying `-s`.*
+* **`Step 3`**, pop out the element from `event_list`, and depend on its type (e.g. is `X` or `Y`?) to schedule next event with **exponential random variable** as timestamp and push back into `event_list`. And the old event will be record into this `event_list` object (treat like a event history, sort by its timestamp.). *Do this routine until reaching the number we set by specifying `-s`.*
 
-* After event scheduling process has been done, we now can count the ratio of event arrival in each time scale.
+* **`Step 4`**, after event scheduling process has been done, we now can count the ratio of event arrival in each time scale.
     * For example, between timestamp `0.0~1.0`, we get `5` event arrival during this time scale; And `1.0~2.0`, we get `4` as event arrival.
     * Now, assume `2.0` is the end point of simulation, we now have 2 result: `X=5` and `X=4`, both have 1 occurance.
     * Then we can say: P(X=5)=1/(1+1)=`0.5`=`50%`=P(X=4) !
 
-* And now we have the history record in object of `event_list`, which record the type of each event, then we can pop it out and get the `P(X)`, `P(Y)` and `P(X+Y)`, with specified value of time scale: $$time\ scale = e(-1/(\lambda_1+\lambda_2))$$, which $$rate\ parameter = \lambda\ , scale\ parameter = \ 1/\lambda = \beta $$
+* **`Step 5`**, and now we have the history record in object of `event_list`, which record the type of each event, then we can pop it out and get the `P(X)`, `P(Y)` and `P(X+Y)`, with specified value of time scale: $$time\ scale = e(-1/(\lambda_1+\lambda_2))$$, which $$rate\ parameter = \lambda\ , scale\ parameter = \ 1/\lambda = \beta $$
 
-* Then we can count the arrival rate in this time scale to finish our simulation!
+* **`Final`**, Then we can count the arrival rate in this time scale to finish our simulation!
 
 #### Result
 
 * So we need to compare `simulation` and `mathematic` model:
     * run with command `make && make plot` to run the program and plot: $$k=20,\ \lambda_X=1,\ \lambda_Y=2$$, also if you want to adjust, please using `./part_a.out -h` to see more.
     * **Mathematic Model**
+        
         ![](image/part_a.png)
+
     * **Simulation Model**
+        
         ![](image/part_a_sim.png)
 
 * We can see, both `mathematic` and `simulation` model all have the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**
@@ -125,13 +128,41 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 
 ![](../res/example3_23.png)
 
-* Testing with statistics: $$k=20,\ \lambda=3,\ p=0.5$$, also if you want to adjust, please using `./part_b.out -h` to see more.
+In this part, we can see Part-B is the inverse process of Part-A (e.g. `Poisson Process Merge`). Part-B is the `Poisson Process Split`, which separate one arrival queue into 2 different set of queue, with specified `probability`(p) to transform from original one to these 2 different set.
 
-![](image/part_b.png)
+--- 
 
-* And simulation part: 
+#### Mathematic Model
 
-![](image/part_b_sim.png)
+From the formula, we can have the equation: $$P(X+Y)=P(\lambda \cdot p_x) \cdot P(\lambda \cdot (1-p_x))$$, which $$P(X) = P(\lambda \cdot p_x),\ P(Y)=P(\lambda \cdot (1-p_x))$$
+
+So in mathematic part, we can construct this equation by program. See detail in [part_b.cc](part_b.cc).
+
+--- 
+#### Simulation Model
+
+As the same concept in Part-A, we use a event queue to represent the entire simulation.
+
+The **differences** between them are:
+* `lambda_1` and `lambda_2` become `lambda * p` and `lambda * (1-p)`
+* When each arrival event occur, we need to using a random number ( `0.0`~`1.0` ) to decide this event type (e.g. become "`X`" or "`Y`"), and as same as `Step 3` in `Part-A`, assign an exponential random variable as timestamp to this event, and then schedule it into event list.
+* And we can use the same step of `Step 4` in `Part-A`, to get the probability of each number of event occur during specified time scale: $$e^{-1.0/\lambda}$$
+* With all the statistics required, we can count the arrival rate in this time scale to finish our simulation!
+
+---
+#### Result
+
+* Run `make && make plot` with statistics: $$k=20,\ \lambda=3,\ p=0.5$$, also if you want to adjust, please using `./part_b.out -h` to see more.
+
+* **Mathematic Model**
+
+    ![](image/part_b.png)
+
+* **Simulation Model**
+    
+    ![](image/part_b_sim.png)
+
+* We can see, both `mathematic` and `simulation` model have almost  the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**, but not match.
 
 #### Difference (TODO)
 
