@@ -16,8 +16,8 @@ astyle:
 
 all: $(OBJDIR) part_a part_b
 	# running program to generate
-	./$(EXEC_A) -k 20 -s 100000
-	./$(EXEC_B) -k 20 -s 100000
+	./$(EXEC_A) -k 20 -s 10000
+	./$(EXEC_B) -k 20 -s 10000
 
 plot: plot_a plot_b plot_a_sim plot_b_sim
 

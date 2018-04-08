@@ -120,7 +120,6 @@ int main(int argc,char *argv[]) {
 
   }
 
-
   if(count!=0)
     counter[count]++;
   if(count_x!=0)
@@ -144,6 +143,9 @@ int main(int argc,char *argv[]) {
     //printf("Y: %d %d\n",it.first,it.second);
     count_y+=it.second;
   }
+
+  // Record the parameter we use for this time
+  fprintf(fp_sim,"# %d %lf %lf %d %d %d %f\n",simulation_time,l,slot,count,count_x,count_y,p);
 
   for(auto&it : counter) {
     double p_xy=0.0;
