@@ -145,6 +145,9 @@ int main(int argc,char *argv[]) {
     count_y+=it.second;
   }
 
+  // Record the parameter we use for this time
+  fprintf(fp_sim,"# %d %d %d %lf %d %d %d\n",simulation_time,lambda1,lambda2,slot,count,count_x,count_y);
+
   for(auto&it : counter) {
     double p_xy=0.0;
     for(int i=0; i<=it.first; i++) {
