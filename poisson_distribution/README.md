@@ -10,12 +10,12 @@
             - [Simulation Model](#simulation-model)
                 - [Implementation Detail](#implementation-detail)
             - [Result](#result)
-            - [Difference (TODO)](#difference-todo)
+            - [Difference](#difference)
         - [Example 3.23 (Split)](#example-323-split)
             - [Mathematic Model](#mathematic-model-1)
             - [Simulation Model](#simulation-model-1)
             - [Result](#result-1)
-            - [Difference (TODO)](#difference-todo-1)
+            - [Difference](#difference-1)
     - [Reference](#reference)
     - [Author](#author)
 
@@ -123,7 +123,24 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 
 * We can see, both `mathematic` and `simulation` model all have the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**
 
-#### Difference (TODO)
+#### Difference 
+
+* After we have finished the `part_a.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test.sh***](test.sh)
+
+| case | simulation times  | $$\lambda_1$$ | $$\lambda_2$$ | result |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1 | 10000  | 1  | 2 | ![](image/part_a_sim_10000_1_2.png) |
+| 2 | 10000  | 1  | 5 | ![](image/part_a_sim_10000_1_5.png) |
+| 3 | 10000 | 1 | 10 | ![](image/part_a_sim_10000_1_10.png) |
+| 4 | 10000 | 10 | 20 | ![](image/part_a_sim_10000_10_20.png) |
+| 5 | 100000 | 10 | 20 | ![](image/part_a_sim_100000_10_20.png) |
+
+* Parameters:
+    * `simulation times` represent the **number** of total event in simulation process.
+    * `lambda_1` represent the lambda in `X`.
+    * `lambda_2` represent the lambda in `Y`.
+
+* As the result shown above, we can see `P(S=X+Y)` is almost perfectly match with `P(X)*P(Y)`; And we can see in case 4, these 2 curves are quite not matching with each other; But after increase the total event number, then we can see these 2 curves are matching again.
 
 --- 
 
@@ -168,11 +185,50 @@ The **differences** between them are:
 
 * We can see, both `mathematic` and `simulation` model have almost  the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**, but not match.
 
-#### Difference (TODO)
+#### Difference
+
+* After we have finished the `part_b.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test.sh***](test.sh)
+
+> Notice, Part A and Part B use the same script.
+
+| case | simulation times  | $$\lambda$$ | $$P$$ | result |
+| ------------- |  ------------- | ------------- | ------------- | ------------- |
+| 1 | 10000  | 3  | 0.5 | ![](image/part_b_sim_10000_3.000000_0.500000.png) |
+| 2 | 10000  | 6  | 0.3 | ![](image/part_b_sim_10000_6.000000_0.300000.png) |
+| 3 | 10000  | 6  | 0.5 | ![](image/part_b_sim_10000_6.000000_0.500000.png) |
+| 4 | 10000  | 6  | 0.7 | ![](image/part_b_sim_10000_6.000000_0.700000.png) |
+| 5 | 10000  | 11  | 0.3 | ![](image/part_b_sim_10000_11.000000_0.300000.png) |
+| 6 | 10000  | 11  | 0.5 | ![](image/part_b_sim_10000_11.000000_0.500000.png) |
+| 7 | 10000  | 11  | 0.7 | ![](image/part_b_sim_10000_11.000000_0.700000.png) |
+| 8 | 10000  | 30  | 0.3 | ![](image/part_b_sim_10000_30.000000_0.300000.png) |
+| 9 | 10000  | 30  | 0.5 | ![](image/part_b_sim_10000_30.000000_0.500000.png) |
+| 10 | 10000  | 30  | 0.7 | ![](image/part_b_sim_10000_30.000000_0.700000.png) |
+| 11 | 100000  | 30  | 0.3 | ![](image/part_b_sim_100000_30.000000_0.300000.png) |
+| 12 | 100000  | 30  | 0.5 | ![](image/part_b_sim_100000_30.000000_0.500000.png) |
+| 13 |100000  | 30  | 0.7 | ![](image/part_b_sim_100000_30.000000_0.700000.png) |
+
+* And there are a more large number of `simulation times`:
+
+| simulation times  | $$\lambda$$ | $$P$$ | result |
+| ------------- | ------------- | ------------- | ------------- |
+| 1000000  | 30  | 0.5 | ![](image/part_b_sim_1000000_30.000000_0.500000.png) |
+
+* Parameters:
+    * `simulation times` represent the **number** of total event in simulation process.
+    * `lambda_1` represent the lambda in `X`.
+    * `lambda_2` represent the lambda in `Y`.
+
+* Different from `Part A`, those 2 curves in simulation of `Part B` do not match.
+
+* The reason of this indication I think is supposed to be the `random number` to decide this new arrival event will be **"X"** or **"Y"**, this unstable factor will cause this bias on these 2 curves.
+
+--- 
 
 ## Reference
 
 * [Basic Concept of Poisson Process](https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php)
+
+--- 
 
 ## Author 
 

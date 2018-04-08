@@ -52,7 +52,7 @@ int main(int argc,char *argv[]) {
 
   event_type S;
   // init with rand
-  if(gen->frand(0,1)>p) {
+  if(gen->frand(0,l)>=(l*p)) {
     // become Y event
     elist->set(0,std::string("Y"));
   } else {
@@ -64,7 +64,7 @@ int main(int argc,char *argv[]) {
     // pop out
     if(elist->get(S)) {
       // Using probability P to decide which event will be push
-      if(gen->frand(0,1)>p) {
+      if(gen->frand(0,l)>=(l*p)) {
         // become Y event
         // elist->set(gen->exponential(l*(1-p)),std::string("Y"));
         elist->set(dist_2(generator),std::string("Y"));

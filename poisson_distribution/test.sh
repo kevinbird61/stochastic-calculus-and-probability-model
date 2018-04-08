@@ -31,4 +31,3 @@ make
 ./$B -k 20 -s 100000 -l 30 && make plot_b_sim
 ./$B -k 20 -s 100000 -l 30 -p 0.3 && make plot_b_sim
 ./$B -k 20 -s 100000 -l 30 -p 0.7 && make plot_b_sim
-./$B -k 20 -s 1000000 -l 30 && make plot_b_sim
