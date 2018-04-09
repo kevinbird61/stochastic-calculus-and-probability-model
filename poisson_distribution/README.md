@@ -1,5 +1,7 @@
 # Poisson Probability Discussion
 
+> Source Code: https://github.com/kevinbird61/stochastic-calculus-and-probability-model/tree/master/poisson_distribution
+
 <!-- TOC -->
 
 - [Poisson Probability Discussion](#poisson-probability-discussion)
@@ -10,12 +12,12 @@
             - [Simulation Model](#simulation-model)
                 - [Implementation Detail](#implementation-detail)
             - [Result](#result)
-            - [Difference](#difference)
+            - [Different Case](#different-case)
         - [Example 3.23 (Split)](#example-323-split)
-            - [Mathematic Model](#mathematic-model-1)
-            - [Simulation Model](#simulation-model-1)
-            - [Result](#result-1)
-            - [Difference](#difference-1)
+            - [Mathematic Model](#mathematic-model)
+            - [Simulation Model](#simulation-model)
+            - [Result](#result)
+            - [Different Case](#different-case)
     - [Reference](#reference)
     - [Author](#author)
 
@@ -123,9 +125,9 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 
 * We can see, both `mathematic` and `simulation` model all have the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**
 
-#### Difference 
+#### Different Case
 
-* After we have finished the `part_a.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test.sh***](test.sh)
+* After we have finished the `part_a.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test_a.sh***](test_a.sh)
 
 | case | simulation times  | $$\lambda_1$$ | $$\lambda_2$$ | result |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -168,6 +170,11 @@ The **differences** between them are:
 * `lambda_1` and `lambda_2` become `lambda * p` and `lambda * (1-p)`
 * When each arrival event occur, we need to using a random number ( `0.0`~`1.0` ) to decide this event type (e.g. become "`X`" or "`Y`"), and as same as `Step 3` in `Part-A`, assign an exponential random variable as timestamp to this event, and then schedule it into event list.
 * And we can use the same step of `Step 4` in `Part-A`, to get the probability of each number of event occur during specified time scale: $$e^{-1.0/\lambda}$$
+* **Most important part,** in `Part B` there have need to create three event queue, `N`, `LX`, `LY` respectively.
+    * `N = N ~ Poisson (λ)`, is using to generate the `X (derive from N)` and `Y (derive from N)` with probability `p` and `1-p`
+    * `LX` represent the independent Poisson (λ*p), compare with `X (derive from N)`.
+    * `LY` represent the independent Poisson (λ*(1-p)), compare with `Y (derive from N)`.
+    * The other calculation are similar with above.
 * With all the statistics required, we can count the arrival rate in this time scale to finish our simulation!
 
 ---
@@ -179,48 +186,46 @@ The **differences** between them are:
 
     ![](image/part_b.png)
 
-* **Simulation Model**
-    
-    ![](image/part_b_sim.png)
+* **Simulation Model** (with `10000` event)
+    * `X (derive from N)` compare with `LX (Poisson (λ*p))`
 
-* We can see, both `mathematic` and `simulation` model have almost  the same curve in **`P(X+Y)`** and **`P(X)*P(Y)`**, but not match.
+        ![](image/part_b_sim_X_10000_3.000000_0.500000.png)
 
-#### Difference
+    * `Y (derive from N)` compare with `LY (Poisson (λ*(1-p)))`
 
-* After we have finished the `part_b.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test.sh***](test.sh)
+        ![](image/part_b_sim_Y_10000_3.000000_0.500000.png)
 
-> Notice, Part A and Part B use the same script.
+    * Also, you can compare `P(X+Y)` with `P(X)*P(Y)`, too
 
-| case | simulation times  | $$\lambda$$ | $$P$$ | result |
-| ------------- |  ------------- | ------------- | ------------- | ------------- |
-| 1 | 10000  | 3  | 0.5 | ![](image/part_b_sim_10000_3.000000_0.500000.png) |
-| 2 | 10000  | 6  | 0.3 | ![](image/part_b_sim_10000_6.000000_0.300000.png) |
-| 3 | 10000  | 6  | 0.5 | ![](image/part_b_sim_10000_6.000000_0.500000.png) |
-| 4 | 10000  | 6  | 0.7 | ![](image/part_b_sim_10000_6.000000_0.700000.png) |
-| 5 | 10000  | 11  | 0.3 | ![](image/part_b_sim_10000_11.000000_0.300000.png) |
-| 6 | 10000  | 11  | 0.5 | ![](image/part_b_sim_10000_11.000000_0.500000.png) |
-| 7 | 10000  | 11  | 0.7 | ![](image/part_b_sim_10000_11.000000_0.700000.png) |
-| 8 | 10000  | 30  | 0.3 | ![](image/part_b_sim_10000_30.000000_0.300000.png) |
-| 9 | 10000  | 30  | 0.5 | ![](image/part_b_sim_10000_30.000000_0.500000.png) |
-| 10 | 10000  | 30  | 0.7 | ![](image/part_b_sim_10000_30.000000_0.700000.png) |
-| 11 | 100000  | 30  | 0.3 | ![](image/part_b_sim_100000_30.000000_0.300000.png) |
-| 12 | 100000  | 30  | 0.5 | ![](image/part_b_sim_100000_30.000000_0.500000.png) |
-| 13 |100000  | 30  | 0.7 | ![](image/part_b_sim_100000_30.000000_0.700000.png) |
+        ![](image/part_b_sim_10000_3.000000_0.716531.png)
 
-* And there are a more large number of `simulation times`:
+And next part we will adjust the parameter and compare the results.
 
-| simulation times  | $$\lambda$$ | $$P$$ | result |
-| ------------- | ------------- | ------------- | ------------- |
-| 1000000  | 30  | 0.5 | ![](image/part_b_sim_1000000_30.000000_0.500000.png) |
+#### Different Case
+
+* After we have finished the `part_b.cc` and compile it to get the executable file, we now can use it to run **`multiple testcase`** - [***test_b.sh***](test_b.sh)
+
+| simulation times  | $$\lambda$$ | $$P$$ | `X , LX` | `Y, LY` |
+|  ------------- | ------------- | ------------- | ------------- | ------------- |
+| 10000 | 3 | 0.5 | ![](image/part_b_sim_X_10000_3.000000_0.500000.png) | ![](image/part_b_sim_Y_10000_3.000000_0.500000.png) |
+| 10000 | 6 | 0.3 | ![](image/part_b_sim_X_10000_6.000000_0.300000.png) | ![](image/part_b_sim_Y_10000_6.000000_0.300000.png) |
+| 10000 | 6 | 0.5 | ![](image/part_b_sim_X_10000_6.000000_0.500000.png) | ![](image/part_b_sim_Y_10000_6.000000_0.500000.png) |
+| 10000 | 6 | 0.7 | ![](image/part_b_sim_X_10000_6.000000_0.700000.png) | ![](image/part_b_sim_Y_10000_6.000000_0.700000.png) |
+| 100000 | 6 | 0.3 | ![](image/part_b_sim_X_100000_6.000000_0.300000.png) | ![](image/part_b_sim_Y_100000_6.000000_0.300000.png) |
+| 100000 | 6 | 0.5 | ![](image/part_b_sim_X_100000_6.000000_0.500000.png) | ![](image/part_b_sim_Y_100000_6.000000_0.500000.png) |
+| 100000 | 6 | 0.7 | ![](image/part_b_sim_X_100000_6.000000_0.700000.png) | ![](image/part_b_sim_Y_100000_6.000000_0.700000.png) |
+| 100000 | 30 | 0.3 | ![](image/part_b_sim_X_100000_30.000000_0.300000.png) | ![](image/part_b_sim_Y_100000_30.000000_0.300000.png) |
+| 100000 | 30 | 0.5 | ![](image/part_b_sim_X_100000_30.000000_0.500000.png) | ![](image/part_b_sim_Y_100000_30.000000_0.500000.png) |
+| 100000 | 30 | 0.7 | ![](image/part_b_sim_X_100000_30.000000_0.700000.png) | ![](image/part_b_sim_Y_100000_30.000000_0.700000.png) |
 
 * Parameters:
     * `simulation times` represent the **number** of total event in simulation process.
-    * `lambda_1` represent the lambda in `X`.
-    * `lambda_2` represent the lambda in `Y`.
+    * `P` represent the probability of event from `N` deriving to `X`.
+    * `X,LX`: result compare with `X (derive from N)` and `LX (independent Poisson)`
+    * `Y,LY`: result compare with `Y (derive from N)` and `LY (independent Poisson)`
 
-* Different from `Part A`, those 2 curves in simulation of `Part B` do not match.
-
-* The reason of this indication I think is supposed to be the `random number` to decide this new arrival event will be **"X"** or **"Y"**, this unstable factor will cause this bias on these 2 curves.
+* As the result above, we can see `X, LX`, `Y, LY` are almost matching respectively !
+    * And you can see case of `lambda=6`, when we increase the `simulation times` from 10000 to 100000, the result will be more matching.
 
 --- 
 

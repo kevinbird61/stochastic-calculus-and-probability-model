@@ -15,7 +15,7 @@ set title "Poisson Distribution - Split Part (Simulation)"
 set xlabel "k"
 set ylabel "Probability: P(k)"
 set terminal png font " Times_New_Roman,12 "
-set output sprintf('image/part_b_sim_%s_%s_%s.png', SIM_TIME, L, P) 
+set output sprintf('image/part_b_sim_%s_%s_%s.png', SIM_TIME, L, SLOT) 
 
 set label 11 center at graph 0.5,-0.25 ,char 1 font ",14"
 set bmargin 6

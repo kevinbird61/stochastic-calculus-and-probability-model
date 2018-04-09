@@ -41,6 +41,8 @@ plot_b: part_b
 
 plot_b_sim: part_b 
 	gnuplot scripts/result_b_sim.gp
+	gnuplot scripts/result_b_sim_x.gp
+	gnuplot scripts/result_b_sim_y.gp
 
 $(OBJDIR):
 	mkdir -p $@
