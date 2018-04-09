@@ -1,6 +1,8 @@
 # Poisson Probability Discussion
 
 > Source Code: https://github.com/kevinbird61/stochastic-calculus-and-probability-model/tree/master/poisson_distribution
+> 
+> **Before starting to read this article, please install chrome extension: [`Github with MathJax`](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), to ensure the correctness of formula format.**
 
 <!-- TOC -->
 

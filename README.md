@@ -1,6 +1,9 @@
-# stochastic-calculus-and-probability-model
+# Stochastic Calculus
 Record the learning materials of the course - "stochastic calculus" in National Cheng Kung University.
 
+![](res/ncku.jpg)
+
+> **Before starting to read this article, please install chrome extension: [`Github with MathJax`](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), to ensure the correctness of formula format.**
 
 - [stochastic-calculus-and-probability-model](#stochastic-calculus-and-probability-model)
     - [Practice Cases](#practice-cases)
