@@ -52,24 +52,18 @@ int main(int argc,char *argv[]) {
 
   event_type S;
   // init with rand
-  if(gen->frand(0,l)>=(l*p)) {
-    // become Y event
-    elist->set(0,std::string("Y"));
-  } else {
-    elist->set(0,std::string("X"));
-  }
+  elist->set(0,std::string("X"));
+  elist->set(0,std::string("Y"));
 
 
   while(rnt) {
     // pop out
     if(elist->get(S)) {
       // Using probability P to decide which event will be push
-      if(gen->frand(0,l)>=(l*p)) {
+      if(gen->frand(0,l)>(l*p)) {
         // become Y event
-        // elist->set(gen->exponential(l*(1-p)),std::string("Y"));
         elist->set(dist_2(generator),std::string("Y"));
       } else {
-        // elist->set(gen->exponential(l*p),std::string("X"));
         elist->set(dist_1(generator),std::string("X"));
       }
       // record
@@ -79,11 +73,11 @@ int main(int argc,char *argv[]) {
   }
 
   // Then eliminate first event (init)
-  elist->rec.erase(elist->rec.begin(),elist->rec.begin()+1);
+  elist->rec.erase(elist->rec.begin(),elist->rec.begin()+2);
 
   // check
   int count=0,count_x=0,count_y=0;
-  double slot=exp(-1.0/(l)),record_slot=slot,record_slot_x=slot,record_slot_y=slot;
+  double slot=exp(-1.0/l),record_slot=slot,record_slot_x=exp(-1.0/(l*p)),record_slot_y=exp(-1.0/(l*(1-p)));
   std::map<int,int> counter,counter_x,counter_y;
 
   while(elist->rec.size()!=0) {
@@ -151,10 +145,10 @@ int main(int argc,char *argv[]) {
     double p_xy=0.0;
     for(int i=0; i<=it.first; i++) {
       // S=X+Y, X:0~it.first, Y:it.first~0
-      p_xy+=((float)counter_x[i]/count_x)*((float)counter_y[it.first-i]/count_y);
+      p_xy+=((float)counter_x[i]/(float)count_x)*((float)counter_y[it.first-i]/(float)count_y);
     }
 
-    fprintf(fp_sim,"%d %lf %lf\n",it.first,(float)it.second/count,p_xy);
+    fprintf(fp_sim,"%d %lf %lf\n",it.first,(float)it.second/(float)count,p_xy);
   }
 
   return 0;
