@@ -39,6 +39,10 @@ $ ./a.out
 
 * Provide class `event` for discrete event utility.
 
+* Workflow:
+
+![](../res/demo/event.png)
+
 ## rand_gen
 
 * provide random variable generation.

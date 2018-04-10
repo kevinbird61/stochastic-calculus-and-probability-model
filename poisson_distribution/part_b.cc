@@ -108,8 +108,7 @@ int main(int argc,char *argv[]) {
 
   // check
   int count=0,count_x=0,count_x_ind=0,count_y=0,count_y_ind=0;
-  double slot=exp(-1.0/l),slot_x=exp(-1.0/(l*p)),slot_y=exp(-1.0/(l*(1-p)))
-                                 ,record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
+  double slot=1.0,slot_x=1.0,slot_y=1.0,record_slot=slot,record_slot_x=slot_x,record_slot_y=slot_y;
   std::map<int,int> counter,counter_x,counter_x_ind,counter_y,counter_y_ind;
 
   while(elist->rec.size()!=0) {
