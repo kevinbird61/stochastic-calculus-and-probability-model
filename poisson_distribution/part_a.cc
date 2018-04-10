@@ -36,6 +36,7 @@ int main(int argc,char *argv[]) {
     double p_s,px,py,p_xy=0;
     p_s = poisson(lambda1+lambda2,i);
 
+    // Get all case probability summation of X,Y combination
     for(int j=0; j<=i; j++) {
       // j represent X , so j increased, it represent that Y is decreased
       px = poisson(lambda1,j);
@@ -49,7 +50,10 @@ int main(int argc,char *argv[]) {
   int simulation_time = std::atoi(args->get_args_val("s").val.c_str());
 
   // discrete event simulation
+
+  // self-defined random generator
   rand_gen *gen = new rand_gen();
+  // STL random library - use to generate exponential random variables
   std::default_random_engine generator;
   std::exponential_distribution<double> dist_1(lambda1),dist_2(lambda2);
 
@@ -64,7 +68,7 @@ int main(int argc,char *argv[]) {
 
   // Scheduling S=X+Y
   while(rnt) {
-    // pop out latest event 
+    // pop out latest event
     if(elist->get(S)) {
       // Generate a timestamp from exponential random variable
       if(S.type=="X") {
@@ -81,6 +85,7 @@ int main(int argc,char *argv[]) {
   // erase the init element
   elist->rec.erase(elist->rec.begin(),elist->rec.begin()+2);
 
+  // set the counter (measure simulation result)
   int count=0,count_x=0,count_y=0;
   double slot=1.0,record_slot=slot,record_slot_x=slot,record_slot_y=slot;
   std::map<int,int> counter,counter_x,counter_y;

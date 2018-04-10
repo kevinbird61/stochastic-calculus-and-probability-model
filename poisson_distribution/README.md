@@ -35,7 +35,7 @@ After `example 2.5`, `3.31`, the program has been refactor a lot, make code reus
 
 ### Example 2.37 (Merge)
 * It will be implemented in `part_a.cc`
-![](../res/example2_37.png)
+![](../res/poisson/example2_37.png)
 
 --- 
 
@@ -144,14 +144,14 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
     * `lambda_1` represent the lambda in `X`.
     * `lambda_2` represent the lambda in `Y`.
 
-* As the result shown above, we can see `P(S=X+Y)` is almost perfectly match with `P(X)*P(Y)`; And we can see in case 4, these 2 curves are quite not matching with each other; But after increase the total event number, then we can see these 2 curves are matching again.
+* As the result shown above, we can see `P(S=X+Y)` is almost perfectly match with `P(X)*P(Y)`; And we can see in case 4, these 2 curves are quite not matching with each other; But after *increase the total event number*, then we can see these 2 curves are matching again.
 
 --- 
 
 ### Example 3.23 (Split)
 * It will be implemented in `part_b.cc`
 
-![](../res/example3_23.png)
+![](../res/poisson/example3_23.png)
 
 In this part, we can see Part-B is the inverse process of Part-A (e.g. `Poisson Process Merge`). Part-B is the `Poisson Process Split`, which separate one arrival queue into 2 different set of queue, with specified `probability`(p) to transform from original one to these 2 different set.
 
@@ -171,7 +171,7 @@ As the same concept in Part-A, we use a event queue to represent the entire simu
 The **differences** between them are:
 * `lambda_1` and `lambda_2` become `lambda * p` and `lambda * (1-p)`
 * When each arrival event occur, we need to using a random number ( `0.0`~`1.0` ) to decide this event type (e.g. become "`X`" or "`Y`"), and as same as `Step 3` in `Part-A`, assign an exponential random variable as timestamp to this event, and then schedule it into event list.
-* And we can use the same step of `Step 4` in `Part-A`, to get the probability of each number of event occur during specified time scale: $$e^{-1.0/\lambda}$$
+* And we can use the same step of `Step 4` in `Part-A`, to get the probability of each number of event occur during specified time scale: 1 (**Which represent "in this time slot, how many event will occur"**)
 * **Most important part,** in `Part B` there have need to create three event queue, `N`, `LX`, `LY` respectively.
     * `N = N ~ Poisson (λ)`, is using to generate the `X (derive from N)` and `Y (derive from N)` with probability `p` and `1-p`
     * `LX` represent the independent Poisson (λ*p), compare with `X (derive from N)`.
@@ -197,9 +197,11 @@ The **differences** between them are:
 
         ![](image/part_b_sim_Y_10000_3.000000_0.500000.png)
 
-    * Also, you can compare `P(X+Y)` with `P(X)*P(Y)`, too
+    * Also, you can compare `P(X+Y)` with `P(X)*P(Y)`, too. But there are lots of bias between them. 
 
-        ![](image/part_b_sim_10000_3.000000_0.716531.png)
+    $sim=10000,\lambda=6$             |  $sim=100000,\lambda=6$
+    :-------------------------:|:-------------------------:
+    | ![](image/part_b_sim_10000_6.000000_1.000000.png) | ![](image/part_b_sim_100000_6.000000_1.000000.png) |
 
 And next part we will adjust the parameter and compare the results.
 
@@ -223,11 +225,12 @@ And next part we will adjust the parameter and compare the results.
 * Parameters:
     * `simulation times` represent the **number** of total event in simulation process.
     * `P` represent the probability of event from `N` deriving to `X`.
-    * `X,LX`: result compare with `X (derive from N)` and `LX (independent Poisson)`
-    * `Y,LY`: result compare with `Y (derive from N)` and `LY (independent Poisson)`
+    * `X,LX`: result compare with `X (derive from N)`(e.g. using $\lambda$ directly) and `LX (independent Poisson)`(e.g. $\lambda \cdot p$)
+    * `Y,LY`: result compare with `Y (derive from N)`(e.g. using $\lambda$ directly) and `LY (independent Poisson)`(e.g. $\lambda \cdot (1-p)$)
 
 * As the result above, we can see `X, LX`, `Y, LY` are almost matching respectively !
     * And you can see case of `lambda=6`, when we increase the `simulation times` from 10000 to 100000, the result will be more matching.
+    * Otherwise, it will have a large oscillation between 2 curves.
 
 --- 
 
