@@ -103,13 +103,15 @@ P(Y=n-k) &=&\frac{e^{-(\lambda_2)}}{(n-k)!} \cdot (\lambda_2)^{n-k}
 * **`Step 2`**, scheduling 2 individual event: `X`, `Y` into event queue for initialization, then we can start our simulation. End condition is the number you can set in arguments before starting program by `-s`.
 
 * **`Step 3`**, pop out the element from `event_list`, and depend on its type (e.g. is `X` or `Y`?) to schedule next event with **exponential random variable** as timestamp and push back into `event_list`. And the old event will be record into this `event_list` object (treat like a event history, sort by its timestamp.). *Do this routine until reaching the number we set by specifying `-s`.*
+    * ![](../res/demo/event.png)
 
 * **`Step 4`**, after event scheduling process has been done, we now can count the ratio of event arrival in each time scale.
     * For example, between timestamp `0.0~1.0`, we get `5` event arrival during this time scale; And `1.0~2.0`, we get `4` as event arrival.
     * Now, assume `2.0` is the end point of simulation, we now have 2 result: `X=5` and `X=4`, both have 1 occurance.
     * Then we can say: P(X=5)=1/(1+1)=`0.5`=`50%`=P(X=4) !
 
-* **`Step 5`**, and now we have the history record in object of `event_list`, which record the type of each event, then we can pop it out and get the `P(X)`, `P(Y)` and `P(X+Y)`, with specified value of time scale: $$time\ scale = e(-1/(\lambda_1+\lambda_2))$$, which $$rate\ parameter = \lambda\ , scale\ parameter = \ 1/\lambda = \beta $$
+* **`Step 5`**, and now we have the history record in object of `event_list`, which record the type of each event, then we can pop it out and get the `P(X)`, `P(Y)` and `P(X+Y)`, with specified value of time scale: $$time\ scale = 1$$, which $$rate\ parameter = \lambda\ , scale\ parameter = \ 1/\lambda = \beta $$
+    * Because *rate parameter* means in this time scale (which indicate as `1` above), how many event will happen. So we can use `1` to measure this simulation is fitting with poisson distribution or not.
 
 * **`Final`**, Then we can count the arrival rate in this time scale to finish our simulation!
 
