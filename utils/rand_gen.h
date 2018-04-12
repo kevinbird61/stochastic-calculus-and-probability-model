@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <random>
 
 class rand_gen {
  public:
@@ -13,6 +14,8 @@ class rand_gen {
   float frand(double LO,double HI);
   // generate exponential random variable
   double exponential(double lambda);
+  // generate uniform random variable
+  double uniform_real(double lb,double ub);
 };
 
 #endif

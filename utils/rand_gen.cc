@@ -14,8 +14,17 @@ float rand_gen::frand(double LO,double HI) {
 }
 
 double rand_gen::exponential(double lambda) {
-  if(lambda>0)
-    return lambda*exp(-lambda*(frand(1,3*lambda)));
-  else
-    return 0;
+  std::default_random_engine generator;
+  // specify upperbound and lowerbound
+  std::exponential_distribution<double> dist(lambda);
+  // return random value
+  return dist(generator);
+}
+
+double rand_gen::uniform_real(double lb,double ub) {
+  std::default_random_engine generator;
+  // specify upperbound and lowerbound
+  std::uniform_real_distribution<double> dist(lb,ub);
+  // return random value
+  return dist(generator);
 }
