@@ -9,6 +9,11 @@ rand_gen::~rand_gen() {
 
 }
 
+int rand_gen::irand(int LO,int HI) {
+  srand(time(NULL)+rand());
+  return LO + rand()%(HI);
+}
+
 float rand_gen::frand(double LO,double HI) {
   srand(time(NULL)+rand());
   return LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
@@ -17,6 +22,13 @@ float rand_gen::frand(double LO,double HI) {
 double rand_gen::exponential(double lambda) {
   // specify upperbound and lowerbound
   std::exponential_distribution<double> dist(lambda);
+  // return random value
+  return dist(generator);
+}
+
+int rand_gen::uniform_int(int lb,int ub){
+  // specify upperbound and lowerbound
+  std::uniform_int_distribution<int> dist(lb,ub);
   // return random value
   return dist(generator);
 }
