@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <random>
+#include <chrono>
 
 class rand_gen {
  public:
@@ -16,6 +17,8 @@ class rand_gen {
   double exponential(double lambda);
   // generate uniform random variable
   double uniform_real(double lb,double ub);
+ private:
+  std::default_random_engine generator;
 };
 
 #endif

@@ -14,7 +14,11 @@ astyle:
 
 all: $(OBJDIR) part_a part_b
 
-plot: 
+run: all
+	# run part_a test
+	./part_a.out -s 100000
+
+plot: run plot_a
 
 part_a: $(OBJS_A)
 	$(CXX) $(CXXFLAGS) $^ -o $(EXEC_A)
@@ -27,6 +31,9 @@ part_b: $(OBJS_B)
 
 $(OBJDIR):
 	mkdir -p $@
+
+plot_a:
+	gnuplot scripts/part_a.gp
 
 clean:
 	rm $(OBJS_A) $(OBJS_B) $(EXEC_A) $(EXEC_B)
