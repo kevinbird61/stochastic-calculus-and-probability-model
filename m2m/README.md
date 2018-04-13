@@ -87,3 +87,5 @@ Assume there have `M` devices (e.g. `UE` / `MTC device`), and `N` preamble.
 ## Reference
 
 [[1] Efficient cooperative access class barring with load balancing and traffic adaptive radio resource management for M2M communications over LTE-A](). **Yi-Huai Hsu, Kuochen Wang, Yu-Chee Tseng**. *Department of Computer Science, National Chiao Tung University, Hsinchu 300, Taiwan*
+
+[[2] Lower Bounds on the LTE-A Average Random Access Delay Under Massive M2M Arrivals](https://web.cs.hacettepe.edu.tr/~mkoseoglu/koseoglu_tcom2.pdf). **Mehmet Koseoglu**. *IEEE, member*
