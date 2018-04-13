@@ -33,7 +33,7 @@ test_b: all
 	# Part B
 	./$(EXEC_B) -s 100000 && make plot_b
 	./$(EXEC_B) -n 1 -r 20 -m 20 -i 1 && make plot_b
-	
+	./$(EXEC_B) -n 20 -m 10 && make plot_b
 
 plot: run plot_a plot_b
 

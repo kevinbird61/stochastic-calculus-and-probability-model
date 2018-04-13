@@ -42,6 +42,8 @@ Base on this four method, we can easily define our question and find an efficien
 
 ![](../res/demo/access-class-barring.png)
 
+Consider LTE-A random access procedure shown above, then we can start to construct our model - `Part A (Access Class Barring)` and `Part B (Random Access)`
+
 ---
 ## Part A: Access Class Barring
 
@@ -113,6 +115,10 @@ And we can easily calculate the successful probability:
 
 $$success\ probability = (1-\frac{1}{p})^{n-1}$$
 
+This means that `1/p` is the preamble choose by the successful node, and the rest of nodes must choose from the rest of preamble, which is `1-(1/p)` for multiply `n-1` times. *We don't need to care about the other one, even when number of devices is smaller than preamble*, just retain the other one won't select the preamble which chose by this successful node. We just focus on **the successful probability** of one node. And if we want to calculate the successful nodes, just multiply `devices` number on it.
+
+![](../res/m2m/preamble.png)
+
 We take this as our mathematic model.
 
 ### Simulation 
@@ -132,8 +138,11 @@ Run with command `make test_b` to generate the test data of `Part B`.(`make test
 | 1 | 10000 | 20 | 1 ~ 20 | ![](image/part_b_10000_20_1_20_1.png) |
 | 2 | 10000 | 20 | 10 ~ 100 | ![](image/part_b_10000_20_10_100_10.png) |
 | 3 | 100000 | 20 | 10 ~ 100 | ![](image/part_b_100000_20_10_100_10.png) |
+| 4 | 10000 | 10 | 20 ~ 100 | ![](image/part_b_10000_10_20_100_10.png) |
 
 As the result shown above, we can see curves of **simulation** and **mathematic** are matching with each other.
+
+And we can see the testcase shown above, when devices is `20`, there need to use almost `120` preamble to make *successful probability* reach to **80%**.
 
 ---
 ## Reference
