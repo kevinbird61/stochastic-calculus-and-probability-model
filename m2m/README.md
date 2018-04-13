@@ -1,5 +1,9 @@
 # Random Access Problem in Machine-to-Machine
 
+> * Source Code: https://goo.gl/9zUwYw
+> * **Before starting to read this article, please install chrome extension: [`Github with MathJax`](https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima/related), to ensure the correctness of formula format.**
+> * Other requirements: `gnuplot`, `astyle`
+
 <!-- TOC -->
 
 - [Random Access Problem in Machine-to-Machine](#random-access-problem-in-machine-to-machine)
