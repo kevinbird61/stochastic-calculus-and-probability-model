@@ -8,6 +8,22 @@ int combination(int m,int n) {
   return (n==0||m==n)?1:combination(m-1,n)+combination(m-1,n-1);
 }
 
+double factorial(int k,int n) {
+  double sum=1;
+  for(int i=1; i<=k; i++) {
+    sum*=(i/(float)n);
+  }
+  return sum;
+}
+
+double factorial_i(int k) {
+  double sum=1;
+  for(int i=1; i<=k; i++) {
+    sum*=(1/i);
+  }
+  return sum;
+}
+
 int main(int argc,char *argv[]) {
   // ===================================== Getting User Input (by parse_arg) =====================================
   // create parsing args object
@@ -56,7 +72,15 @@ int main(int argc,char *argv[]) {
   // i represent the success devices, calculate its probability
   double success_p_math=0.0;
   for(int i=1; i<=m; i++) {
-    success_p_math+=combination(m,i)*powf(1/(float)n,i)*powf((n-i)/(float)n,m-i);
+    if(n<=m){
+      if(i<n)
+        success_p_math+=powf((i)/(float)n,i)*powf((n-i)/(float)n,m-i-2*(n-i));
+      else
+        success_p_math+=factorial(n-1,n)*powf(1/(float)n,m-i);
+    }
+    else{
+      success_p_math+=powf((i)/(float)n,i);
+    }
   }
 
   printf("%lf\n",success_p_math);
