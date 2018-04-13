@@ -22,7 +22,7 @@ set label 11 "Figure, Simulation time=".SIM.",Number of Devices=".DEVICE."\nNumb
 
 # Set xtic & xlabel
 set xtics rotate by 45 right
-set key right
+set key right bottom
 
 # Plot
 plot \

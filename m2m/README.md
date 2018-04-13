@@ -8,9 +8,7 @@
     - [Part A: Access Class Barring](#part-a-access-class-barring)
         - [Technique Background](#technique-background)
         - [System Model](#system-model)
-            - [Mathematic Model](#mathematic-model)
         - [Simulation](#simulation)
-            - [Simulation Model](#simulation-model)
         - [Analysis](#analysis)
     - [Part B: Random Access](#part-b-random-access)
         - [Technique Background](#technique-background)
@@ -54,13 +52,28 @@ Base on this four method, we can easily define our question and find an efficien
 
 ### System Model 
 
-#### Mathematic Model
+Here we construct our mathematic model from technique background:
+
+* Before calculate access delay, consider:
+    * How many times do we need to complete this job? (All devices pass the access class barring)
+    * Find the worst case as upperbound.
+    * Then we can summation the result from best case to worse case.
+
+* Our upperbound is generated after running the simulation model( will mention later ), we use the worse case in simulation process as our worse case in mathematic model, so that the result can plot together in well organization.
 
 ### Simulation 
 
-#### Simulation Model
+In simulation part, I choose `probability "p"(threshold)` as observed value; Adjust this value to see the variation among different `p` value.
+
+In each `p` case, we run `s` times of simulation routine. Each routine will finish when all devices have passed the access class barring; and each routine will record its delay times at the end of routine. 
+
+After running `s` simulation routines, we can get an average access delay! We take this value as **access delay** of simulation. 
 
 ### Analysis 
+
+| case | simulation times  | $$Number\ of\ device$$ | $$P$$ | result |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1 | 100000 | 20 | 0.1 | ![](image/part_a_100000_20_0.100000.png) |
 
 ---
 ## Part B: Random Access
@@ -79,9 +92,32 @@ Base on this four method, we can easily define our question and find an efficien
 
 Assume there have `M` devices (e.g. `UE` / `MTC device`), and `N` preamble.
 
+We can find the successful nodes from this paper. [ [2] ](#reference)
+
+$$u(n)=n (1-\frac{1}{p})^{n-1}$$
+
+$$\ n=number\ of \ devices,\ p=number\ of\ preamble$$
+
+And we can easily calculate the successful probability: 
+
+$$success\ probability = (1-\frac{1}{p})^{n-1}$$
+
+We take this as our mathematic model.
+
 ### Simulation 
 
+In simulation part, I choose `number of preamble` as observed value; Adjust this value to see the variation among different `preamble` value with specified `interval` to iterate, and in each `preamble` case, we run `s` times of simulation routine.
+
+Consider that we don't need to care about **"retransimisson"**, so in each simulation routine, we only need to calculate the success devices(which using unique preamble).
+
+And at the end of routine, using success devices to calculate **successful probability**.
+
 ### Analysis 
+
+| case | simulation times  | $$Number\ of\ device$$ | $$Preamble\ range$$ | result |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1 | 10000 | 20 | 10 ~ 100 | ![](image/part_b_10000_20_10_100_10.png) |
+
 
 ---
 ## Reference
