@@ -67,11 +67,15 @@ Here we construct our mathematic model from technique background:
 
 * Our upperbound is generated after running the simulation model( will mention later ), we use the worse case in simulation process as our worse case in mathematic model, so that the result can plot together in well organization.
 
+* And we using `geometric distribution` to calculate each expected value of each retry time, and summarize the expected value of access delay `from 0 to largest key`(e.g **retry times**).
+
 ### Simulation 
 
 In simulation part, I choose `probability "p"(threshold)` as observed value; Adjust this value to see the variation among different `p` value.
 
 In each `p` case, we run `s` times of simulation routine. Each routine will finish when all devices have passed the access class barring; and each routine will record its delay times at the end of routine. 
+
+Each device will draw a random number `q ~ uniform(0,1)` and compare with `p`, if `q < p`, then represent the success.
 
 After running `s` simulation routines, we can get an average access delay! We take this value as **access delay** of simulation. 
 
@@ -124,6 +128,8 @@ We take this as our mathematic model.
 ### Simulation 
 
 In simulation part, I choose `number of preamble` as observed value; Adjust this value to see the variation among different `preamble` value with specified `interval` to iterate, and in each `preamble` case, we run `s` times of simulation routine.
+
+All the preamble selected by each device are generated from random number of `uniform distribution`. (See more in class "rand_gen" from `utils/rand_gen.h` and `utils/rand_gen.cc`), and using std::map as data structure to record the selected preamble.
 
 Consider that we don't need to care about **"retransimisson"**, so in each simulation routine, we only need to calculate the success devices(which using unique preamble).
 
