@@ -71,9 +71,16 @@ After running `s` simulation routines, we can get an average access delay! We ta
 
 ### Analysis 
 
+Run with command `make test_a` to generate the test data of `Part A`.(`make test` will run all the testcase, include A and B.)
+
 | case | simulation times  | $$Number\ of\ device$$ | $$P$$ | result |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| 1 | 100000 | 20 | 0.1 | ![](image/part_a_100000_20_0.100000.png) |
+| 1 | 100 | 30 | 0.1~0.9 | ![](image/part_a_100_30_0.100000.png) |
+| 2 | 100 | 40 | 0.1~0.9 | ![](image/part_a_100_40_0.100000.png) |
+| 3 | 10000 | 20 | 0.1~0.9 | ![](image/part_a_10000_20_0.100000.png) |
+| 4 | 100000 | 20 | 0.1~0.9 | ![](image/part_a_100000_20_0.100000.png) |
+
+As the result shown above, we can see curves of **simulation** and **mathematic** are matching with each other.
 
 ---
 ## Part B: Random Access
@@ -114,10 +121,15 @@ And at the end of routine, using success devices to calculate **successful proba
 
 ### Analysis 
 
+Run with command `make test_b` to generate the test data of `Part B`.(`make test` will run all the testcase, include A and B.)
+
 | case | simulation times  | $$Number\ of\ device$$ | $$Preamble\ range$$ | result |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| 1 | 10000 | 20 | 10 ~ 100 | ![](image/part_b_10000_20_10_100_10.png) |
+| 1 | 10000 | 20 | 1 ~ 20 | ![](image/part_b_10000_20_1_20_1.png) |
+| 2 | 10000 | 20 | 10 ~ 100 | ![](image/part_b_10000_20_10_100_10.png) |
+| 3 | 100000 | 20 | 10 ~ 100 | ![](image/part_b_100000_20_10_100_10.png) |
 
+As the result shown above, we can see curves of **simulation** and **mathematic** are matching with each other.
 
 ---
 ## Reference

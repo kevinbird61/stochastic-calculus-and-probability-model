@@ -17,9 +17,23 @@ all: $(OBJDIR) part_a part_b
 run: all
 	# Default testcase 
 	# run part_a test
-	./part_a.out -s 100000
+	./$(EXEC_A) -s 100000
 	# run part_b test
-	./part_b.out
+	./$(EXEC_B)
+
+test: test_a test_b
+
+test_a: all
+	# Part A
+	./$(EXEC_A) -s 10000 && make plot_a
+	./$(EXEC_A) -m 30 && make plot_a
+	./$(EXEC_A) -m 40 && make plot_a
+
+test_b: all
+	# Part B
+	./$(EXEC_B) -s 100000 && make plot_b
+	./$(EXEC_B) -n 1 -r 20 -m 20 -i 1 && make plot_b
+	
 
 plot: run plot_a plot_b
 
