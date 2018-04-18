@@ -12,9 +12,21 @@ Record the learning materials of the course - "stochastic calculus" in National 
         - [Poisson Distribution (See more)](#poisson-distribution-see-more)
         - [Random Access Problem in Machine-to-Machine (See more)](#random-access-problem-in-machine-to-machine-see-more)
         - [Compound Random Variables](#compound-random-variables)
+    - [Some useful self-defined libraries](#some-useful-self-defined-libraries)
 - [Author](#author)
 
 Mostly use **`C++`** to do both simulation/mathematic work and validation.
+
+> Develop environment requirement:
+> 
+> - Operating System : `ubuntu 16.04`
+> 
+> |  | version |
+> | ------ | ------ |
+> | gnuplot | version 5.0 patchlevel 3 |
+> | g++ | gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) | 
+> | make | GNU Make 4.1 |
+> | astyle | Artistic Style Version 2.05.1 | 
 
 ## Practice Cases
 
@@ -50,6 +62,17 @@ Mostly use **`C++`** to do both simulation/mathematic work and validation.
 ---
 
 ### [Compound Random Variables](compound_random_variable/)
+
+---
+
+## Some useful self-defined libraries
+
+| Name | Description |
+| ------ | ------ |
+| [parse_arg](utils/) | parsing the argument from `argc`/`argv` |
+| [poisson](utils/) | generating poisson distribution. |
+| [rand_gen](utils/) | additional wrapper of different kinds of random number generator. |
+| [event_list](utils/) | scheduling、storing event list, use for discrete event simulation process. | 
 
 # Author 
 
