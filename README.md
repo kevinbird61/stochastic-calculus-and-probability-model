@@ -13,6 +13,7 @@ Record the learning materials of the course - "stochastic calculus" in National 
         - [Random Access Problem in Machine-to-Machine (See more)](#random-access-problem-in-machine-to-machine-see-more)
         - [Compound Random Variables](#compound-random-variables)
     - [Some useful self-defined libraries](#some-useful-self-defined-libraries)
+    - [Presentation (on Course)](#presentation-on-course)
 - [Author](#author)
 
 Mostly use **`C++`** to do both simulation/mathematic work and validation.
@@ -73,6 +74,10 @@ Mostly use **`C++`** to do both simulation/mathematic work and validation.
 | [poisson](utils/) | generating poisson distribution. |
 | [rand_gen](utils/) | additional wrapper of different kinds of random number generator. |
 | [event_list](utils/) | scheduling、storing event list, use for discrete event simulation process. | 
+
+## Presentation (on Course)
+
+* [Stochastic Properties of Random Waypoint Mobility Model](http://slides.com/kevinbird61/rwp-model)
 
 # Author 
 
