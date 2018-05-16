@@ -29,10 +29,17 @@ printf("%s\n",args->get_args_val("k").val.c_str());
 * and corresponded output
 
 ```sh
+# without any parameters (default state)
 $ ./a.out
 0.0.1
 1
 5
+
+# with specified parameters
+$ ./a.out -v 0.0.2 -l 10 -k 10000
+0.0.2
+10
+10000
 ```
 
 ## event
